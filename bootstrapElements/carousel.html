@@ -1,0 +1,31 @@
+ 
+ <!-- Small modal -->
+ <button type="button" id="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+  Small modal
+</button>
+
+<div class="modal fade " id="modal" tabindex="-1" role="dialog"  aria-hidden="true">
+  <div class="modal-dialog" id="modalDialog" style="background: none; border:none">
+    <div class="modal-content" style="background: none ; border:none">
+      <div id="carousel" class="carousel slide" data-bs-ride="carousel" style="background: none ; border:none">
+        <div class="carousel-inner" id="inner" style="background: none ; border:none">
+          <div class="carousel-item active"  data-interval="500000" style="background: none ; border:none">
+            <img class="img-size" src="./Assets/images/information degree.png" style="background: none">
+          </div>
+          <div class="carousel-item"  data-interval="500000"  style="background: none ; border:none">
+            <img class="img-size" src="./Assets/images/journalism degree.png" style="background: none">
+          </div>
+        </div>
+        <button class="carousel-close" id="closeCarousel" data-toggle="modal" data-target="#modal">X</button>
+        <button class="carousel-control-prev" type="button" data-target="#carousel" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#carousel" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

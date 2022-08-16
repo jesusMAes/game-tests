@@ -1,0 +1,142 @@
+----------------------------------------------THIS IS A KIND OF DEVLOG WHERE I PUT PERSONAL NOTES AND MESSAGES FOR MY FUTURE ME--------------------
+
+Vamos a ir anotando aquí para no ensuciar con comentarios, vamos a trabajar con una estructura concreta, en asset map irán los mapas de cada escena y su tileset, en asset sprites las hojas de los personajes, las clases concretas iran en classes, y las escenas en una carpeta scenes.
+
+vale, lo primero instalar phaser
+
+después de eso el juego base con los plugins, de momento solo se va a usar animatedtiles y grid engine que facilitan la gestión de npcs
+
+
+Como grid engine funciona por tiles para las posiciones de todo lo que venga desde tiled tendremos que dividir su x e y por el tamaño de la casilla para que funcione
+
+DIALOGOS: el proceso del dialogo comienza como ya había probado, en update se comprueba la posición de cada npc con respecto al jugador, si hay algun npc cerca sale la animación, cuando incluya más npcs lo mismo hay que retocarlo por si hay dos cerca y se cambia la animación, debería bastar con una bandera para que salte una vez, después de la animación se comprueba si interact (A) está pulsado, y si su keycode vale 65, es decir a, y se lanza el metodo talk, lo primero que hacemos en él es cambiar el keycode de interact así no puede lanzarse una y otra vez, luego cambiamos el valor movable de la clase player así aunque pulses las teclas no te puedes mover.
+
+Tras eso acercamos al npc si es que no está ya al lado y ahí empezaría el algoritmo de writing, cuando acabe cada frase podemos devolver el valor de interact a a y que al pulsarlo pase a la siguiente frase si es que hay. En los datos de npc podemos llevar la cuenta de las veces que has hablado con el para que vaya actualizando la frase o cuando las agotes elija la ultima o una al azar de un grupito, ya veré
+
+
+En player he añadido una variable bandera isTalking, la ponemos a true cuando comienza una interacción y no la bajamos hasta que acaba, así podemos usar el botón A durante la interacción sin volver a relanzar toda la función talk
+
+LOS DIALOGOS ME ESTÁN VOLVIENDO LOCO, voy a trastear creando un plugin que lo haga porque phaser me cambia el scope de la escena a la ventana y los callbacks no van
+
+IMPORTANTE puedes jugar con el css del camvas el zoom del juego y el de la cámara para que se quede limitado a una zona
+
+VALE, parece que he conseguido lo de los dialogos, a ver si consigo explicarmelo a mi mismo. El flujo de ejecución comienza en update donde por cada npc se llama a la función checkPosition
+
+En checkPosition comparamos la distancia de ese npc con la de nuestro jugador, cuando está cerca ponemos el emote de hablar y mientras está en ese rango se vigila si se pulsa la A, si su keycode está en 65 y si la propiedad istalking del jugador está en false, cuando se pulsa comienza el metodo talk
+
+Lo primero que hace el metodo talk es cambiar el keycode a 80, basicamente porque como checkposition está en update lo vigila siempre, así no puede saltar doble
+
+Tras eso paramos el movimiento aleatorio del npc, y usamos una serie de ifs para calcular su posicion respecto a nosotros, funciona regu pero bueno el resultado es que después con move to le pasas tu posicion con alguna variable y se acerca a ti (masomenos)
+
+tras moverlo actualizamos el valor de current dialog pasandole el del array de dialogos del npc en su valor actual , después activamos la caja de dialogos y por si acaso reseteamos su contenido. Ahora llamamos a typewritter
+
+typewritter es la maldita función asíncrona que me lleva todo el día de cabeza
+
+Recibe como argumentos el npc para poder acceder a sus dialogos, usa una variable global i para ver si i es menor que el length, si lo es añade al innerhtml del dialogo la letra del currentdialog en esa posicion i, aumenta el valor de i y hace un settimeout, aquí es donde estaba lo dificil porque es una función asincrona al tener que esperar y al salir del context
+
+aparte para el contexto, la primera vez que se llama el contexto this es la escena pero cuando pasa el tiempo el contexto de this pasa a ser la ventana y ya no puedes hacer como calback this.typewriter, esto se soluciona bindeando el this, es decir al hacer el callback le pones despues bind(this) y eso le dice cual es el contexto de esa función, el callback queda así :
+setTimeout(this.typeWritter.bind(this), 50, npc)
+
+en el else de typewritter, es decir, cuando terminamos de escribir el dialogo lo que hacemos es volver a poner i a 0, aumentar el valor de currentdialog para que la proxima vez que hablemos diga su siguiente frase y devolvemos el keyCode de interact a 65, así podrá pulsarse de nuevo
+
+Pero ojo que no hemos cambiado ni el isTalking del personaje ni hemos hecho que se vuelvan a mover, esto lo hacemos en un segundo metodo. Tras lanzar la primera interacción de hablar el personaje dice más cosas por tanto en update, donde lanzabamos el metodo talk hay un if else, el primero es si istalking es falso, para empezar a hablar
+
+su else if es solo si pulsas la a pero istalking es true, esto permite continuar la conversación hasta que acabe
+
+El metodo keepTalking también recibe el npc, vuelve a cambiar el keycode para que no puedas pulsarlo mil veces, establece el currentDialog que será el siguiente del que ya hablaste porque lo aumentamos al terminar typewritter, tras eso llama a typewritter que vuelve a escribir el dialogo que toque
+
+cuando acabe ese dialogo si hay más al pulsar a se vuelve a llamar a keepTalking y pone el siguiente. Antes de llamar al writer comprueba que el dialogo no sea undefined, eso significaría que no hay más dialogos, en ese caso pasaríamos al else. En él cambiamos el currentdialog de ese npc para poder volver a hablar con él, lo pongo a uno pero podría ponerse a algo prefijado, ya veremos
+
+Tras eso limpiamos y cerramos el cuadro de diálogo. Cogemos al npc y le volvemos a decir que walkrandom, también ponemos el movable de nuestro player en true, que es la bandera que vigila si podemos o no movernos. 
+
+Devolvemos el keycode a 65 y por ultimo usamos un setTimeout para que espere medio segundo y cambie el istalking a false, esta espera es porque el isdown de phaser al pulsar la tecla registra como 50 pulsaciones o así ya que cuenta el tiempo que está bajada, al esperar para devolverle su valor evitamos que la misma pulsación de cerrar el dialogo vuelva a lanzar otro dialogo
+
+parece que ya he conseguido arreglar el problema que había cuando tenías más de un npc con las emociones, la solución ha sido crear una propiedad en la clase player llamada nearNpc, en la función checkdistance cuando un npc está cerca pusheamos ese npc al array de nearNpc, pero antes comprobamos si ya está, eso lo hacemos con un for que recorre nearnpc comparando los id con el id del npc, si no está lo pusheamos si ya estaba no. Cuando se alejan volvemos a hacer un for para sacar ese npc del array y si no hay ninguno cerca, es decir, si el length de nearnpc es 0 desactivamos el emoticono
+
+Mas adelante cuando tenga que meter más emotes puede venir bien encapsular todo esto en una función que de entre esos npcs busque el más cercano para matizar la emoción 
+
+He añadido una funcion en la clase npc para que ellos también muestren la emoción y desactivado el codigo que los acercaba porque desbarataba la emoción y además funcionaba regumal
+
+---------CAMBIAR ESCENAS-------------------
+en principio cambiar escenas parece sencillo, cuando pase algo usas this.scene.switch()  y le pasas el nombre de la escena, ya el resto lo programas en esa escena
+
+Para cambiar la escena he hecho una nueva capa de objetos en tiled, son rectangulos, luego al crear la escena metemos esos objetos en un array y en update comprobamos la distancia con nuestro pj, si es chiquita lanzamos el cambio de escena, he usado gsap para el cambio de escena, es simple, coge la pantalla negra le da opacidad uno, cuando completa lanza la escena y lo cambia a color blanco antes de volver a opacidad 0
+
+conseguido el cambio de escenas entre una y otra, sería buena idea ver como pasar parámetros para que el player aparezca en la salida de esa escena, esto podríamos meterlo en las propiedades del objeto en tiled y luego consultarlo desde aquí
+
+hay que ver como cuadrar el blackscreen con el canvas que a pantalla completa va bien pero luego va regu
+
+
+Profundidad y layers: cuando trabajamos con grid engine el metodo de hacer foregrounds no es el mismo que si pintamos en canvas, si queremos que algo se dibuje por encima del personaje debemos usar una propiedad en el layer de tiled, esta propiedad es ge_alwaysTop y cuando está true se activa
+
+ANTE ERRORES EN COLISIONES: grid engine no detecta bien las colisiones cuando la posición de tu personaje lleva decimales, así que en sus startposition asegurate de usar math floor
+
+La funcion básica para interactuar con objectos es la misma que para detectar npcs cercanos, el player almacena en un array todos los objetos que están a menos de x distancia y cuando le demos a A interactuará 
+
+
+
+INTERACTUAR CON OBJETOS: el flujo de ejecución comienza en update ahí llamamos a checkposition que comprueba los objetos cercanos, cuando la posición está cerca vigila el botón interact, y cuando lo pulsas comienza un evento, tiene dos excepciones para los eventos que no son un simple dialogo. Los eventos simples de pararse y que salga un dialogo se hacen en el metodo interactWithObject
+
+interactWithObject recibe por parametros el objeto que lo lanzó, cambia el keycode para que no salga más veces, el movable y el istalking de player. Luego recorre el array de data que almacena todos los objetos con sus dialogos y busca el data que corresponda al nombre del objeto. Almacena ese data en la variable currentObject y la posición del data en object identifier, esto nos sirve para en el futuro si queremos cambiar algun valor de ese data podemos llamar a data[objectIdentifier] para acceder a esa posición del array de datos, lo haremos para actualizar su bloque de diálogos cuando acabe la interacción. 
+
+Una vez tiene los datos de ese objeto, que incluyen sus diálogos almacena el bloque de dialogos en la variable dialogues, es decir un objeto puede tener dos o tres bloques de dialogos, la primera vez que interactuamos el que se almacena es el 0 pero cuando completemos ese dialogo pasaremos al siguiente bloque, para eso usamos la propiedad currentDialog que tiene cada data 
+
+almacenamos también el mood que matiza la emoción y llamamos a player emotes pasandole ese mood para que salga una emoción u otra 
+
+En nuestra variable currentDialog almacenamos el contenido del dialogo en la posición counDialogue, es decir si el dialogo tiene dos frases la primera será cero, cuando acabe countdialogue aumentará y la segunda vez será 1 
+
+Tras eso ponemos el cuadro de texto y llamamos a typewriter que escribe el contenido de currentDialog, cuando acaba de escribirlo devuelve la i a 0 para que el siguiente dialogo se escriba desde el inicio, mira si en el array de dialogos de ese bloque de dialogos hay otro, en ese caso aumenta counDialogue
+
+Tras eso cuando pulsas A se llama a keepTalking que actualiza el dialogo y llama a typewriter para que lo escriba, en caso de no haber más dialogos en ese bloque aumenta el current dialogo de ese objeto en data, ese decir le dice que el objeto computer está en su siguiente bloque de dialogos y la proxima vez que interactues los dialogos que se cargarán serán los correspondientes a ese bloque, si no hay más bloques lo devuelve al ultimo bloque. 
+
+//TRABAJANDO EN: el modal emergente de los titles 
+
+el modal: se hace en bootstrap por lo visto phaser lo soporta entonces podemos meterlo en un archivo html aparte y cargarlo en nuestra escena. Para ello en el config de game debemos añadir: 
+
+dom:{
+  createContainer: true
+}
+Luego en la escena usamos this.load.html para cargar ese elemento, en create creamos el elemento y le asignamos una variable con this.addDom. Ahí no sale un ejemplo activable el ver como activarlo ya es cosa mia creo
+
+
+TITLE EVENT: es el evento que se lanza cuando interactuas con los diplomas, como el resto, comienza en checkDistance. En Create hemos añadido el bloque de html que hace el modal y creado una variable que almacena el botón y cambia el estado de una variable bandera modalOpen, esto es porque cuando se abre el modal cambia su estado pero el juego no lo sabe así que vigilamos esta variable bandera para activar y terminar el evento 
+
+Dentro de la función titleEvent cambiamos el keycode, paramos al player y ponemos la caja de dialogo que va con un contenido fijo que ponemos en la propia función, luego creamos una función write que basicamente es la misma de los diálogos pero no usa el npc ni nada de eso, escribe el contenido que hemos puesto antes. Dentro de esa función cuando acaba de escribirlo llama a button.click que abre el modal y luego llama a un segundo método: checkModal
+
+El método checkModal se encarga de vigilar si el modal está abierto o cerrado, vigila también la tecla a, si la pulsas llama a button click y cierra el modal, así puedes cerrarlo con el botón de cerrar o dándole a A. 
+Luego usa un if para ver si modalOpen es true, si lo es hace un timeout y se llama a si mismo para comprobarlo una y otra vez. 
+
+En el momento en que el modal está cerrado devuelve el movimiento al jugador y el keycode de interactButton a 65 para que salgas del evento
+
+
+----BOOK EVENT------
+El método se lanza como el resto en checkDistance. Antes de meternos en el método hay que destacar que en las variables iniciales hemos usado document.createElement para crear tres botones y una variable que tiene getElementById para recoger el sitio donde se renderiza 
+
+Una vez lanzado el evento se llama al método readBook que bloquea al movimiento pone el dialogo y tal, dentro de este metodo creamos una función que basicamente es la de write pero creada aquí localmente tras crear esa función la llamamos para que se lance. La función escribe el dialogo y al acabar llama a addButtons
+
+addButtons coge la caja del dialogo y le mete dentro los botones de sí y no que creamos en las variables, luego les hace un addEventlistener para que cuando se clique en el botón llame a una tercera función: handleButtons, esta es la que hace el resto del curro, handle buttons coge la source del evento, el id del botón que lo ha lanzado y luego usa un if y segun cual sea hace una cosa u otra. Si pulsaste no pues sencillamente cierra el dialogo y ya. 
+Si pulsaste si quita los botones de la caja de dialogo usando removechild, la limpia y la oculta. 
+
+Luego enseña el libro para lo que usamos una librería llamada epubjs, esta con solo crear un nuevo book dandole la url de donde tenemos el epub (lo hacemos en preload) ya te crea el libro, aquí le decimos que lo renderice al div area que tenemos para ello, y le ponemos su display en block para que se vea. En ese div tenemos un botón para pasar página y otro para retroceder, los cogemos y le añadimos un addEventlistener que llama a rendition(el display del libro).next o .prev segun el botón y eso ya te cambia la página. Añadimos otro addEventlistener para poder hacer lo mismo con las teclas izqda y dcha El div de area donde enseñamos el libro tiene un botón que llama a este metodo, cuando pulsamos el botón cerrar usamos dos variables con metodos de la libreria epub para obtener la página del libro y guardarla en una variable, así si vuelven a interactuar lo abrimos ahí. Tras eso usamos el metodo destroy para cerrar el libro, devolvemos el display a none y restauramos movimiento del personaje
+
+--------------------------------------IMPORTANTE-----------------
+Sobre el cambio de escenas. A veces al cambiar de escena las variables no se limpian del todo especialmente las de los mapas así que en cada escena usa un nombre distinto para la variable del mapa para asegurarte de que llama a ese mapa y no intenta renderizar el map de la anterior pero usando los tileset de esta escena.
+
+Sobre las multiple calls a la escena cuando cambiamos de escena. Cambiar de escena con settimeout no funciona, por algún motivo llama muchas veces a la escena y eso da problemas entonces en el método que cambia la escena tienes que meter detrás de los gsap un evento timer de phaser que lo llama solo una vez, ese evento tiene esta forma
+this.time.addEvent({
+          delay:500,
+          loop:false,
+          callback:()=>{
+            this.scene.switch('trialScene') 
+          }
+
+
+los eventos comienzan como todo, en update, por cada evento se llama a checkevent pasandole el evento check event usa la distancia para activarse y activar el emote, luego comprueba el botón, su keycode y el istalking, cuando eso pasa mira si el nombre del evento es signal o even para lanzar uno u otro. 
+
+PlayEvent es basicamente una función de dialogo aunque me salió regulera, primero recorre data para ver cual cuadra con el nombre del evento entonces lo almacena en eventData, usa el currentDialog para encontrar el contenido del evento, luego lanza la caja de dialogo, he añadido un html llamado is talking donde ponemos el primer elemento del array que corresponde a quien habla, así los dialogos son arrays y cada frase es otro array siendo el primer elemento quien habla y el segundo lo que dice, tras eso usamos una función de escribir y cuando acaba miramos si hay más dialogos para actualizar el current data, si hay lo actualizamos, limpiamos el html y salimos del dialogo, si no hay es decir, en el else le decimos que el current dialog es igual al ultimo que hay en data, limpiamos y salimos 
+
+en caso de que la función sea sign, es decir de carteles, en la parte de variables he creado unas variables que corresponden al cartel, usan createElement para crear un div, luego le dan un id y un innerhtml de contenido, con css ajustamos su estilo para que molen, luegon en signs  ponemos una variable bandera llamada sign open en true, cojemos el nombre del evento y usamos un switch para ver a quien corresponde, según sea uno u otro usamos appendchild para añadir a gamecontainer el div que corresponde, luego llamamos a una función checkSignal , esa función mira si se pulsa el botón, cuando se pulsa pone signOpen en false, luego si sigue en true es que no se ha pulsado así que usa un timeout y vuelve a ejecutar, en caso de que se pulse usa removechild para quitar el div de la señal del game container, devuelve movimiento, restaura el keycode y el player is talking
+
+15/8 he logrado hacer los dialogos, meter npcs con los que funcionen los dialogos y otros que no, eso se logra usando una propiedad canTalk y chequeando los dialogos solo cuando la tienen en true 
+
+Los dialogos con npc funcionan como ya tenía documentado con la diferencia de que aquí cada npc tiene varios bloques de dialogos. El npc tiene una variable current dialog que dice si se muestra el primero el segundo y así, luego cada bloque de dialogo es un objeto que tiene una propiedad current frase que controla la frase actual y luego un array de arrays con el contenido, cada array tiene dos posiciones, la primera dice el nombre de quien habla, la segunda la frase a decir, en las funciones talk y keeptalking lo que hacemos es coger el bloque de dialogo que tenga ese npc actualmente, en un inicio es 0 y al hablar cada vez que se pulsa a aumentamos la frase de ese bloque, cuando no hay más frases actualizamos el currentDialog y la proxima vez pasará lo mismo pero con el siguiente bloque de dialogos, cuando no haya más bloques en lugar de aumentarlo lo dejamos igual y se repetirá la ultima

@@ -1,0 +1,17 @@
+{
+  "name": "cv_game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grid-engine": "^2.19.1",
+    "phaser": "^3.55.2",
+    "phaser-animated-tiles": "^2.0.2"
+  }
+}
