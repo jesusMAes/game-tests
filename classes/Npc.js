@@ -86,8 +86,8 @@ export default class Npc extends Phaser.GameObjects.Sprite{
 
   emotes(){
     
-    this.emotions.x = this.x+7
-    this.emotions.y = this.y-7
+    this.emotions.x = this.x+10
+    this.emotions.y = this.y-3
     if(this.isTalking ==true){
     this.emotions.visible = true;
     this.emotions.anims.play('begin')

@@ -74433,7 +74433,7 @@
 </data>
  </layer>
  <objectgroup id="11" name="Player">
-  <object id="1" name="Player" x="594" y="297.333">
+  <object id="1" name="Player" x="317" y="498.333">
    <point/>
   </object>
  </objectgroup>

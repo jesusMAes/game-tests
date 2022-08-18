@@ -1,6 +1,7 @@
 import Npc from "../classes/Npc.js";
 import Player from "../classes/Player.js";
-import {universityEvents} from '../data/universityEvents.js' 
+import {universityEvents} from '../data/universityEvents.js' ;
+import {universityNpcs} from '../data/universityNpcs.js'
 
 //Variables
 let dialogBox = document.getElementById('UI');
@@ -26,6 +27,12 @@ let whoTalk;
 let phraseContent; //stores  speech content 
 let i = 0 //count letters
 
+//NPC VARIABLES
+let npcData = universityNpcs;
+let allNpcs = [];
+let talkContent;
+let currentPhrase;
+//talkContent phrase and whotalk reuse the event variables
 
 //scene class
 class UniversityScene extends Phaser.Scene{
@@ -46,10 +53,19 @@ class UniversityScene extends Phaser.Scene{
      //player & emotions
      this.load.spritesheet('player', './Assets/Sprites/player trial1.png',{frameWidth:31.333, frameHeight:33})
      this.load.spritesheet('emotions', './Assets/Sprites/emotions.png',{frameWidth:16, frameHeight:16})
+
+     //Npc Sprites
+     this.load.spritesheet('teacher1', './Assets/Sprites/teacher1.png',{frameWidth:32, frameHeight: 32})
+     this.load.spritesheet('teacher2', './Assets/Sprites/teacher2.png',{frameWidth:32, frameHeight: 32})
+     this.load.spritesheet('teacher3', './Assets/Sprites/teacher3.png',{frameWidth:32, frameHeight: 32})
+     this.load.spritesheet('teacher4', './Assets/Sprites/teacher4.png',{frameWidth:32, frameHeight: 32})
+     this.load.spritesheet('teacher5', './Assets/Sprites/teacher5.png',{frameWidth:32, frameHeight: 32})
+
   }
 
   create(){
     //camera
+ 
     this.cameras.main.zoom = 1.6
     this.cameras.main.width = 768;
 
@@ -72,11 +88,36 @@ class UniversityScene extends Phaser.Scene{
    })
    player.init()
 
+    //  let example =this.add.sprite(player.x*16, player.y*16, 'teacher5',4)
+    //  example.depth =99
+
    //get position of the events in the map
    universityMap.findObject('Events', event =>{
     mapEvents.push(event)
    })
    
+   //create npcs
+   for(let i=0;i <npcData.length; i++){
+    //find npc position in Tiled map
+    const npcSpawn = universityMap.findObject('Npcs', npc => npc.name == npcData[i].id);
+    //create npc and insert it into array 
+    allNpcs[i] = new Npc({
+      scene: this,
+      x: npcSpawn.x,
+      y: npcSpawn.y,
+      spritesheet: npcData[i].sprite,
+      id: npcData[i].id,
+      mapping: npcData[i].animationMapping,
+      canTalk: npcData[i].canTalk,
+      dialogs: npcData[i].dialogs,
+      randomMove: npcData[i].randomMove,
+    })
+  }
+    //activate npcs emotions
+    allNpcs.forEach(npc =>{
+      npc.init()
+    })
+    console.log(allNpcs)
    
 
     //interact button
@@ -115,11 +156,47 @@ class UniversityScene extends Phaser.Scene{
         }
       ]
      }
+
+    //add npcs to grid engine
+   allNpcs.forEach(npc =>{
+    gridEngineConfig.characters.push({
+      id: npc.id,
+      sprite: npc,
+      walkingAnimationMapping:{
+        up:{
+          leftFoot:npc.mapping.up.leftFoot,
+          standing: npc.mapping.up.standing,
+          rightFoot: npc.mapping.up.rightFoot
+        },
+        down:{
+          leftFoot:npc.mapping.down.leftFoot,
+          standing: npc.mapping.down.standing,
+          rightFoot: npc.mapping.down.rightFoot
+        },
+        left:{
+          leftFoot: npc.mapping.left.leftFoot,
+          standing: npc.mapping.left.standing,
+          rightFoot: npc.mapping.left.rightFoot
+        },
+        right: {
+          leftFoot: npc.mapping.right.leftFoot,
+          standing: npc.mapping.right.standing,
+          rightFoot: npc.mapping.right.rightFoot
+        }
+      },
+      startPosition:{x: npc.x, y: npc.y},
+      speed: 2
+    })
+   })
      
    this.gridEngine.create(universityMap, gridEngineConfig)
    
-
-       //camera follow player
+   //move npcs
+   allNpcs.forEach(npc =>{
+    if(npc.randomMove != 0)
+    this.gridEngine.moveRandomly(npc.id, 2, npc.randomMove)
+   })
+    //camera follow player
    this.cameras.main.setBounds(0,0)
    this.cameras.main.startFollow(player, true)
 
@@ -135,6 +212,13 @@ class UniversityScene extends Phaser.Scene{
   //check for events
   mapEvents.forEach(event =>{
     this.checkEvent(event)
+  })
+
+  //check for npcs
+  allNpcs.forEach(npc =>{
+    if(npc.canTalk == true){
+      this.checkNpc(npc)
+    }
   })
   //KEYBOARD
   const cursors = this.input.keyboard.createCursorKeys();
@@ -155,12 +239,13 @@ class UniversityScene extends Phaser.Scene{
     //check distance & activate emotions
     let distance  = Phaser.Math.Distance.Between(player.getCenter().x,player.getCenter().y, event.x, event.y)
 
+    
     // if near check for activation
     if(distance < 55 && distance > 0){
-      if(interactButton.isDown && interactButton.keyCode == 65 && player.isTalking   == false){
+      if(interactButton.isDown && interactButton.keyCode == 65 && player.isTalking == false){
         this.playEvent(event)
       }else if(interactButton.isDown && interactButton.keyCode == 65){
-        this.keepPlaying(event)
+        this.keepPlaying()
       }
     }
 
@@ -194,7 +279,7 @@ class UniversityScene extends Phaser.Scene{
     player.movable = false;
     player.isTalking = true
     interactButton.keyCode = 80;
-
+    
     //get data of that event
     eventData.forEach(object =>{
       if(event.name == object.id){
@@ -205,8 +290,10 @@ class UniversityScene extends Phaser.Scene{
     //get the content of dialog
     
     currentDialog = currentEventData.currentDialog
-    let numberOfCurrentPhrase = currentEventData.content[currentDialog].currentPhrase 
-    actualPhrase = currentEventData.content[currentDialog].content[numberOfCurrentPhrase];
+    console.log(currentEventData.currentDialog)
+    let numberOfCurrentPhrase = currentEventData.dialogs[currentDialog].currentPhrase 
+    
+    actualPhrase = currentEventData.dialogs[currentDialog].content[numberOfCurrentPhrase];
     whoTalk = actualPhrase[0];
     phraseContent = actualPhrase[1]
 
@@ -217,11 +304,11 @@ class UniversityScene extends Phaser.Scene{
      talking.innerHTML = whoTalk
 
      //writeContent
-    this.eventWritter(currentEventData)
-    
+    this.eventWritter()
+   
   }
 
-  eventWritter(currentEventData){
+  eventWritter(){
     if(i < phraseContent.length){
       dialogBox.innerHTML += phraseContent.charAt(i);
       i++
@@ -231,22 +318,20 @@ class UniversityScene extends Phaser.Scene{
         args: [currentEventData],
         callbackScope: this
       })
-    }else{
+    }
+    else{
       i=0;
       //next phrase
       //acces to next phrase
-      let numberofPhrase = eventData[dataPosition].content[eventData[dataPosition].currentDialog].currentPhrase
-
-      if(eventData[dataPosition].content[currentDialog].content[numberofPhrase+1] =!undefined){
-        //access to object and update its currentPhrase
-        eventData[dataPosition].content[currentDialog].currentPhrase +=1;
+      let numberofPhrase = eventData[dataPosition].dialogs[eventData[dataPosition].currentDialog].currentPhrase
+      //access to object and update its currentPhrase
+      eventData[dataPosition].dialogs[currentDialog].currentPhrase +=1;
         
-      }
       interactButton.keyCode = 65;
     }
   }//eventWritter
 
-  keepPlaying(event){
+  keepPlaying(){
     interactButton.keyCode = 80
 
     //clean dialog box 
@@ -254,11 +339,181 @@ class UniversityScene extends Phaser.Scene{
     dialogBox.appendChild(talking);
 
     //get content
-    let numberofPhrase = eventData[dataPosition].content[currentDialog].currentPhrase
-    actualPhrase = eventData[dataPosition].content[currentDialog].content[numberofPhrase]
-    console.log(actualPhrase)
+    let numberofPhrase = eventData[dataPosition].dialogs[currentDialog].currentPhrase
+    actualPhrase = eventData[dataPosition].dialogs[currentDialog].content[numberofPhrase]
 
+    //if actual phrase exist display it
+    if(actualPhrase != undefined){
+      whoTalk = actualPhrase[0]
+      phraseContent = actualPhrase[1]
+
+      //update dialogBox
+      talking.innerHTML='';
+      talking.innerHTML = whoTalk;
+      //write the text
+      this.eventWritter()
+
+    }else{
+      //change current dialog for next interaction if exists
+      if(eventData[dataPosition].dialogs[currentDialog+1] != undefined){
+      eventData[dataPosition].currentDialog +=1
+      }else{
+        //reset phrase
+        eventData[dataPosition].dialogs[currentDialog].currentPhrase = 0
+      }
+
+      //exit conversation
+      dialogBox.innerHTML='';
+      dialogBox.style.display='none';
+      player.movable = true;
+      this.time.addEvent({ 
+        delay:500,
+        callback: ()=>{
+          player.isTalking = false;
+          interactButton.keyCode = 65
+        }
+      })
+     
+    }
+
+
+  }//keep playing
+
+
+  //checkNpc
+  checkNpc(npc){
+    //get distante with the npc
+    let distance =  Phaser.Math.Distance.Between(player.x,player.y,npc.x, npc.y)
+
+    //listen for talk
+    if(distance < 50 && distance > 0){
+      //first interaction
+      if(interactButton.isDown && interactButton.keyCode ==65
+         && player.isTalking == false){
+          this.talk(npc)
+      }else if(interactButton.isDown && interactButton.keyCode == 65){
+        //next interaction
+          this.keepTalking(npc)
+      }
+    }
+
+      //insert npcs to display emotions
+      if(distance <50 && distance > 45){
+        let isyet = false
+        for(let i = 0; i <player.nearNpc.length; i++){
+          if(npc.id == player.nearNpc[i].id){
+            isyet = true
+          }
+        }
+        if(isyet == false){
+          player.nearNpc.push(npc)
+        }
+  
+        player.emotes()
+      }else if(distance > 50 && distance < 60){
+        for(let i=0; i < player.nearNpc.length;i++){
+          if(npc.id == player.nearNpc[i].id){
+            player.nearNpc.splice(i,1)
+          }
+        }
+        if(player.nearNpc.length == 0){
+          player.emotions.visible = false
+        }
+      }
+
+  }//Check Npc
+
+
+  talk(npc){
+    //block both player & npc
+    player.movable = false;
+    this.gridEngine.stopMovement(npc.id)
+    interactButton.keyCode = 80;
+    player.isTalking = true
+    npc.isTalking = true
+    setTimeout(npc.emotes.bind(npc), 150)
+
+    // get the content of the dialog 
+     currentPhrase = npc.dialogs[npc.currentDialog].currentPhrase
+     whoTalk = npc.dialogs[npc.currentDialog].content[currentPhrase][0]
+    talkContent = npc.dialogs[npc.currentDialog].content[currentPhrase][1]
+    
+    //display dialog box
+    dialogBox.style.display = 'block';
+    dialogBox.innerHTML=''
+    dialogBox.appendChild(talking);
+    talking.innerHTML = whoTalk
+
+    this.typeWriter(npc);
   }
+
+    
+  keepTalking(npc){
+    //block interact button
+    interactButton.keyCode = 80;
+
+    //clean dialog box 
+    dialogBox.innerHTML=''
+    dialogBox.appendChild(talking);
+
+    //check if there is more phrases
+    if(npc.dialogs[npc.currentDialog].currentPhrase < npc.dialogs[npc.currentDialog].content.length){
+    //get content 
+    currentPhrase = npc.dialogs[npc.currentDialog].currentPhrase
+    whoTalk = npc.dialogs[npc.currentDialog].content[currentPhrase][0]
+
+    talkContent = npc.dialogs[npc.currentDialog].content[currentPhrase][1]
+    talking.innerHTML = ''
+    talking.innerHTML = whoTalk
+    this.typeWriter(npc);
+   
+  }else {
+ 
+    if(npc.dialogs[npc.currentDialog+1] != undefined){
+      npc.currentDialog +=1;
+    }else {
+      npc.dialogs[npc.currentDialog].currentPhrase =0;
+    }
+
+    //exit conversation
+    dialogBox.innerHTML=''
+    dialogBox.style.display = 'none'
+    npc.isTalking = false
+    npc.emotes()
+    player.movable = true 
+    this.gridEngine.moveRandomly(npc.id, 1, npc.randomMove)
+    this.time.addEvent({ 
+      delay:500,
+      callback: ()=>{
+        player.isTalking = false;
+        interactButton.keyCode = 65
+      }
+    })
+  }
+  }//keep talking
+
+  typeWriter(npc){
+    if(i < talkContent.length){
+      dialogBox.innerHTML += talkContent.charAt(i);
+      i++
+      this.time.addEvent({ //less problems with scope that timeout
+        delay:50,
+        callback: this.typeWriter,
+        args: [npc],
+        callbackScope: this
+      })
+    }else{
+      i=0;
+      //next phrase 
+      if(npc.dialogs[npc.currentDialog].content[currentPhrase][1] != undefined){
+
+        npc.dialogs[npc.currentDialog].currentPhrase +=1
+        }
+        interactButton.keyCode = 65
+    }
+
+  }//typewriter
+
 
 }//END OF CLASS
 
