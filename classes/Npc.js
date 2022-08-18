@@ -9,6 +9,7 @@ export default class Npc extends Phaser.GameObjects.Sprite{
     spritesheet,
     spriteName,
     mapping,
+    currentDialog,
     dialogs,
     canTalk,
     randomMove,
@@ -20,9 +21,9 @@ export default class Npc extends Phaser.GameObjects.Sprite{
     this.y = Math.floor(y/16)
     this.mapping=mapping
     this.id = id
+    this.currentDialog = currentDialog
     this.dialogs = dialogs
     this.randomMove = randomMove
-    this.currentDialog = 0
     this.emotions,
     this.canTalk = canTalk
     this.isTalking = false
@@ -99,4 +100,3 @@ export default class Npc extends Phaser.GameObjects.Sprite{
 
 }
 
-//puede ser buena idea poner un punto al que volver al terminar un dialogo

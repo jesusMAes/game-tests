@@ -43,6 +43,7 @@ let i =0;
 
 //switchZones
 let switchZones =[]
+let spawnPoint
 
 //class & methods
 class MurciaScene extends Phaser.Scene{
@@ -51,8 +52,9 @@ class MurciaScene extends Phaser.Scene{
   }
 
 
-  init(){
+  init(data){
     //prepare data, use it when passing data between scenes
+    spawnPoint=data
   }
 
   preload(){
@@ -83,6 +85,7 @@ class MurciaScene extends Phaser.Scene{
     this.cameras.main.zoom = 1.6
     this.cameras.main.width = 768;
 
+    
     //map
     const murciaMap = this.make.tilemap({key: 'murciaMap'})
     const tileset = murciaMap.addTilesetImage('pokemonTileset', 'tileset')
@@ -92,7 +95,7 @@ class MurciaScene extends Phaser.Scene{
     })
 
     //player
-   const playerSpawn =  murciaMap.findObject('Player', obj => obj.name==='Player')
+   const playerSpawn =  murciaMap.findObject('spawnPoints', obj => obj.name===spawnPoint)
    player = new Player({
     scene:this,
     x:playerSpawn.x,
@@ -130,6 +133,7 @@ class MurciaScene extends Phaser.Scene{
       id: npcData[i].id,
       mapping: npcData[i].animationMapping,
       canTalk: npcData[i].canTalk,
+      currentDialog: npcData[i].currentDialog,
       dialogs: npcData[i].dialogs,
       randomMove: npcData[i].randomMove,
     })
@@ -490,6 +494,12 @@ class MurciaScene extends Phaser.Scene{
  
     if(npc.dialogs[npc.currentDialog+1] != undefined){
       npc.currentDialog +=1;
+       //update data for switch scene
+     npcData.forEach(data =>{
+      if(data.id== npc.id){
+        data.currentDialog +=1;
+      }
+     })
     }else {
       npc.dialogs[npc.currentDialog].currentPhrase =0;
     }
@@ -568,8 +578,38 @@ class MurciaScene extends Phaser.Scene{
               this.scene.start('RoomScene')
             }
           })
+          break
+          
+          case 'changeUniversity':
+            player.movable = false
+            //gsap animation
+            gsap.to('#blackScreen',{
+              opacity:1,
+              duration:0.5,
+              onComplete:()=>{
+                gsap.to('#blackScreen',{
+                  backgroundColor: 'white',
+                  duration: 0.2,
+                  onComplete: ()=>{
+                    gsap.to('#blackScreen',{
+                      opacity:0,
+                      backgroundColor:'black'
+                    })
+                  }
+                })
+              }
+            })
+          this.time.addEvent({
+            delay:500,
+            loop:false,
+            callback:()=>{
+              this.scene.start('UniversityScene')
+            }
+          })
+          break
         }
       }//end if
+
   }
 
 

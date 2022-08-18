@@ -568,7 +568,7 @@ class RoomScene extends Phaser.Scene{
           delay:500,
           loop:false,
           callback:()=>{
-            this.scene.start('MurciaScene')
+            this.scene.start('MurciaScene', 'roomSpawn')
             this.scene.pause()
             
           }

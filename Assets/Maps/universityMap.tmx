@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="59" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="12">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="59" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="16">
  <editorsettings>
   <export target="universityMap.json" format="json"/>
  </editorsettings>
@@ -74191,8 +74191,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6583,6584,6585,6586,6587,6588,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,894,895,896,897,898,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6675,6676,6677,6678,6679,6680,6681,6682,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,988,989,990,991,992,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6769,6770,6771,6772,6773,6774,6775,6776,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6863,6864,0,0,0,0,6869,6870,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6957,6958,0,0,0,0,6963,6964,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6581,6582,6583,6584,6585,6586,6587,0,0,0,0,0,0,0,6583,6584,6585,6586,6587,6588,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6675,6676,6677,6678,6679,6680,6681,0,0,0,0,0,0,6676,6677,6678,6679,6680,6681,6682,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6769,6770,6771,6772,6773,6774,6775,0,0,0,0,0,0,6770,6771,6772,6773,6774,6775,6776,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -74241,7 +74241,7 @@
 </data>
  </layer>
  <objectgroup id="10" name="Events">
-  <object id="2" name="universityEntry" x="426" y="766.5">
+  <object id="2" name="universityEntry" x="430.667" y="679.5">
    <point/>
   </object>
   <object id="3" name="journalismSign" x="537.5" y="559.5">
@@ -74254,25 +74254,37 @@
    <point/>
   </object>
  </objectgroup>
+ <objectgroup id="12" name="changeZone">
+  <object id="15" name="changeZone" x="390.485" y="793.697" width="82.4242" height="21.9394"/>
+ </objectgroup>
  <objectgroup id="11" name="Npcs">
   <object id="6" name="Archival Teacher" x="167.333" y="651.333">
    <point/>
   </object>
-  <object id="7" name="communication Teacher" x="718" y="577.333">
+  <object id="7" name="communication Teacher" x="739.333" y="580.666">
    <point/>
   </object>
-  <object id="8" name="documental languages teacher" x="318.667" y="742.667">
+  <object id="8" name="documental languages teacher" x="215.334" y="230.667">
    <point/>
   </object>
   <object id="10" name="mass comunication teacher" x="678" y="739.333">
    <point/>
   </object>
-  <object id="11" name="retrieval information teacher" x="156" y="364.667">
+  <object id="11" name="retrieval information teacher" x="168" y="422">
+   <point/>
+  </object>
+  <object id="12" name="Web teacher" x="628.667" y="315.333">
+   <point/>
+  </object>
+  <object id="13" name="janitor" x="434.667" y="380">
+   <point/>
+  </object>
+  <object id="14" name="student" x="616" y="460.667">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="9" name="Player">
-  <object id="1" name="Player" x="558" y="698.5">
+  <object id="1" name="Player" x="427.333" y="755.833">
    <point/>
   </object>
  </objectgroup>

@@ -34,6 +34,9 @@ let talkContent;
 let currentPhrase;
 //talkContent phrase and whotalk reuse the event variables
 
+//switchZones
+let switchZones = []
+
 //scene class
 class UniversityScene extends Phaser.Scene{
   constructor(){
@@ -60,12 +63,14 @@ class UniversityScene extends Phaser.Scene{
      this.load.spritesheet('teacher3', './Assets/Sprites/teacher3.png',{frameWidth:32, frameHeight: 32})
      this.load.spritesheet('teacher4', './Assets/Sprites/teacher4.png',{frameWidth:32, frameHeight: 32})
      this.load.spritesheet('teacher5', './Assets/Sprites/teacher5.png',{frameWidth:32, frameHeight: 32})
+     this.load.spritesheet('teacher6', './Assets/Sprites/teacher6.png',{frameWidth:30.66, frameHeight: 34.7})
+     this.load.spritesheet('janitor', './Assets/Sprites/janitor.png',{frameWidth:31, frameHeight: 34.25})
+     this.load.spritesheet('student', './Assets/Sprites/student.png',{frameWidth:31, frameHeight: 33})
 
   }
 
   create(){
     //camera
- 
     this.cameras.main.zoom = 1.6
     this.cameras.main.width = 768;
 
@@ -88,15 +93,13 @@ class UniversityScene extends Phaser.Scene{
    })
    player.init()
 
-    //  let example =this.add.sprite(player.x*16, player.y*16, 'teacher5',4)
-    //  example.depth =99
-
    //get position of the events in the map
    universityMap.findObject('Events', event =>{
     mapEvents.push(event)
    })
    
    //create npcs
+
    for(let i=0;i <npcData.length; i++){
     //find npc position in Tiled map
     const npcSpawn = universityMap.findObject('Npcs', npc => npc.name == npcData[i].id);
@@ -109,16 +112,21 @@ class UniversityScene extends Phaser.Scene{
       id: npcData[i].id,
       mapping: npcData[i].animationMapping,
       canTalk: npcData[i].canTalk,
+      currentDialog: npcData[i].currentDialog,
       dialogs: npcData[i].dialogs,
       randomMove: npcData[i].randomMove,
     })
   }
+
     //activate npcs emotions
     allNpcs.forEach(npc =>{
       npc.init()
     })
-    console.log(allNpcs)
-   
+
+    //get switchZones
+    universityMap.findObject('changeZone', zone =>{
+      switchZones.push(zone)
+    })
 
     //interact button
     interactButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -220,6 +228,13 @@ class UniversityScene extends Phaser.Scene{
       this.checkNpc(npc)
     }
   })
+
+   //check for scene change
+   switchZones.forEach(zone =>{
+    this.switchZones(zone)
+  })
+
+
   //KEYBOARD
   const cursors = this.input.keyboard.createCursorKeys();
   if(cursors.left.isDown && player.movable){
@@ -238,7 +253,6 @@ class UniversityScene extends Phaser.Scene{
   checkEvent(event){
     //check distance & activate emotions
     let distance  = Phaser.Math.Distance.Between(player.getCenter().x,player.getCenter().y, event.x, event.y)
-
     
     // if near check for activation
     if(distance < 55 && distance > 0){
@@ -468,9 +482,16 @@ class UniversityScene extends Phaser.Scene{
     this.typeWriter(npc);
    
   }else {
- 
+    //update dialog
     if(npc.dialogs[npc.currentDialog+1] != undefined){
       npc.currentDialog +=1;
+     //update data for switch scene
+     npcData.forEach(data =>{
+      if(data.id== npc.id){
+        data.currentDialog +=1;
+      }
+     })
+
     }else {
       npc.dialogs[npc.currentDialog].currentPhrase =0;
     }
@@ -513,6 +534,43 @@ class UniversityScene extends Phaser.Scene{
     }
 
   }//typewriter
+
+  switchZones(zone){
+    //basic position algorithm 
+    if(player.x +player.width > zone.x && player.x < zone.x + zone.width
+      && player.y+player.height > zone.y &&
+      player.y < zone.y + zone.height){
+        
+        switch(zone.name){
+          case 'changeZone':
+            player.movable = false
+            //gsap animation
+            gsap.to('#blackScreen',{
+              opacity:1,
+              duration:0.5,
+              onComplete:()=>{
+                gsap.to('#blackScreen',{
+                  backgroundColor: 'white',
+                  duration: 0.2,
+                  onComplete: ()=>{
+                    gsap.to('#blackScreen',{
+                      opacity:0,
+                      backgroundColor:'black'
+                    })
+                  }
+                })
+              }
+            })
+          this.time.addEvent({
+            delay:500,
+            loop:false,
+            callback:()=>{
+              this.scene.start('MurciaScene', 'universitySpawn')
+            }
+          })
+        }
+      }//end if
+  }
 
 
 }//END OF CLASS

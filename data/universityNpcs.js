@@ -406,4 +406,180 @@ export const universityNpcs = [
       }
     ],
   },//information retrieval teacher
+  {
+    id: 'Web teacher',
+    sprite: 'teacher6',
+    spriteSrc: './Assets/Sprites/teacher6.png',
+    frameWidth: 32,
+    frameHeight:32,
+    animationMapping:{ //moves
+      up:{
+        leftFoot:10,
+        standing: 0,
+        rightFoot:2
+      },
+      down:{
+        leftFoot:11,
+        standing:1, //To face direction, correct:5,
+        rightFoot:8
+      },
+      left:{
+        leftFoot:3,
+        standing:6,
+        rightFoot:9
+      },
+      right:{
+        leftFoot:7,
+        standing:1,
+        rightFoot:4
+      }
+    },
+    randomMove: 0,
+    currentDialog: 0, 
+    canTalk: true,
+    dialogs:[
+     {
+      currentPhrase:0,
+      content:[
+        ['Web teacher', `Html is the core of the web, its bones. Every web has an Html skeleton`],
+        ['Web teacher', `Css is the skin, the hair and all the visible parts.  Just with CSS your web can look awesome`],
+        ['Web teacher', `You can use only HTML and CSS and have a very nice web, but if you want your web to be dynamic you need one more thing`],
+      ]
+     },
+     {
+      currentPhrase:0,
+      content:[
+        ['Web teacher', `Programming languages are the muscles of a web, they allow interaction and dynamics responses`],
+        ['Web teacher', `By using a programming language you can change your web in countless ways`],
+        ['Web teacher', `Also you can use programming languages to change both CSS and HTML of the web dynamically`],
+        ['Web teacher', `For example: you can hide/show a text only using a button, you can change the user name or icon only with programming`],
+      ]
+     },
+     {
+      currentPhrase:0,
+      content:[
+        ['Web teacher', `The most popular web language is Javascript, Javascript is a light language that is used in the client side `],
+        ['Web teacher', `This means that is the web browser who interpretes the Javascript code and make the changes on your page`],
+        ['Web teacher', `Javascript is a versatile language that can work with objects, funcional programming, prototypes...`],
+        ['Web teacher', `Javascript don't use explicit types, but you can solve this by using Typescript`],
+        ['Web teacher', `Currently is common to use ECMAScript 6, that provides new ways to make our code as template string or arrow function`],
+      ]
+     },
+     {
+      currentPhrase:0,
+      content:[
+        ['Web teacher', `Make a website with HTML, CSS and javascript is hard , if you are fast and good you can have a small and functional website in a week `],
+        ['Web teacher', `But are fastest ways to make a web, if you use Wordpress or other content management system (CMS) you can have a functional web in an hour `],
+        ['Web teacher', `Content management systems allow an easy editing of the content, provides a lot of templates and separate presentation from content`],
+        ['Web teacher', `There is a lot of advantages in using CMS, like the easy maintenance, the quick changes of content, they are SEO friendly and the user management `],
+        ['Web teacher', `But in the other hand CMS are slower than a CSS page, you have to be careful with security problems and they are less creativity `],
+      ]
+     },
+     {
+      currentPhrase:0,
+      content:[
+        ['Web teacher', `There are general CMS like Wordpress, E-comerce CMS like shopify, e-learning CMS like moodle, even wiki CMS like mediaWiki`],
+        ['Web teacher', `The principal functions of a CMS are: create contents, manage content, publish contents and display contents `],
+        ['Web teacher', `So if CMS are so good why use programming languages for making webs?`],
+        ['Web teacher', `When you want a proffesional web you want to everything to be under your control `],
+        ['Web teacher', `You don't settle with a generic template, you want to offer something to your client, with programming you can do that`],
+        ['Web teacher', `You have to provide value to your client, this own game can't be possible with a free wordpress web`],
+        ['Web teacher', `You'll want to do things interactive and personalice user experience, even if those things are possible with CMS you'll need programming languages `],
+      ]
+     },
+     {
+      currentPhrase:0,
+      content:[
+        ['Web teacher', `Both CMS and programed pages will use databases to store information, this databases can be relational or NoSQL databases `],
+        ['Web teacher', `Relational databses are the traditional way to store information in form of relationed tables and list that are retrieved from the web`],
+        ['Web teacher', `NoSQL databases like MongoDB are nonstructured databases.`],
+        ['Web teacher', `When you are making a project is very important to consider carefully which type of database you will use `],
+        ['Web teacher', `Relational database has best performance for data storage while NoSql are recommended for data mining and social networks`],
+      ]
+     }
+    ],
+  },//Web teacher
+  {
+    id: 'janitor',
+    sprite: 'janitor',
+    spriteSrc: './Assets/Sprites/janitor.png',
+    frameWidth: 32,
+    frameHeight:32,
+    animationMapping:{ //moves
+      up:{
+        leftFoot:10,
+        standing: 0,
+        rightFoot:2
+      },
+      down:{
+        leftFoot:11,
+        standing:5, //To face direction, correct:5,
+        rightFoot:8
+      },
+      left:{
+        leftFoot:3,
+        standing:6,
+        rightFoot:9
+      },
+      right:{
+        leftFoot:7,
+        standing:1,
+        rightFoot:4
+      }
+    },
+    randomMove: 0,
+    currentDialog: 0, 
+    canTalk: true,
+    dialogs:[
+      {
+        currentPhrase:0,
+        content:[
+          ['Janitor', 'The University is closed right now, come back in a couple of weeks']
+        ]
+      }
+    ],
+  },//Janitor
+  {
+    id: 'student',
+    sprite: 'student',
+    spriteSrc: './Assets/Sprites/student.png',
+    frameWidth: 32,
+    frameHeight:32,
+    animationMapping:{ //moves
+      up:{
+        leftFoot:10,
+        standing: 0,
+        rightFoot:2
+      },
+      down:{
+        leftFoot:11,
+        standing:5, //To face direction, correct:5,
+        rightFoot:8
+      },
+      left:{
+        leftFoot:3,
+        standing:6,
+        rightFoot:9
+      },
+      right:{
+        leftFoot:7,
+        standing:1,
+        rightFoot:4
+      }
+    },
+    randomMove: 0,
+    currentDialog: 0, 
+    canTalk: true,
+    dialogs:[
+      {
+        currentPhrase:0,
+        content:[
+          ['Student', 'We are collecting funds for the orphans, do you want to donate?'],
+          ['Jesús', `I would love to but as I don't have a job I don't have money`],
+          ['Inner me', 'Hire me. Do it for the orphans'],
+          
+        ]
+      }
+    ],
+  },//Janitor
 ]
