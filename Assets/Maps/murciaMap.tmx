@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="59" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="24">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="59" height="59" tilewidth="16" tileheight="16" infinite="0" nextlayerid="19" nextobjectid="27">
  <editorsettings>
   <export target="murciaMap.json" format="json"/>
  </editorsettings>
@@ -74432,12 +74432,12 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="11" name="Player">
+ <objectgroup id="11" name="Player" visible="0">
   <object id="1" name="Player" x="317" y="498.333">
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="12" name="Events">
+ <objectgroup id="12" name="Events" visible="0">
   <object id="2" name="charizard" class="event" x="142.667" y="309.333">
    <point/>
   </object>
@@ -74466,7 +74466,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="14" name="Npcs">
+ <objectgroup id="14" name="Npcs" visible="0">
   <object id="10" name="Dolores" x="663" y="720">
    <point/>
   </object>
@@ -74492,7 +74492,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="15" name="NonTalkableNpcs">
+ <objectgroup id="15" name="NonTalkableNpcs" visible="0">
   <object id="14" name="Baby" x="512" y="291">
    <point/>
   </object>
@@ -74504,9 +74504,13 @@
   <object id="23" name="roomSpawn" x="317" y="498">
    <point/>
   </object>
+  <object id="26" name="jobSpawn" x="662" y="524">
+   <point/>
+  </object>
  </objectgroup>
- <objectgroup id="16" name="ChangeZones">
+ <objectgroup id="16" name="ChangeZones" class="changeJob">
   <object id="16" name="changeRoom" x="302" y="442.333" width="18.6667" height="17.6667"/>
   <object id="21" name="changeUniversity" x="641" y="142" width="56" height="33"/>
+  <object id="25" name="changeJob" x="721" y="511" width="30" height="95"/>
  </objectgroup>
 </map>

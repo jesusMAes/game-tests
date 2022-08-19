@@ -70,6 +70,95 @@ body.modal-open div.modal-backdrop{
     animation-iteration-count: infinite;
   }
 
+  /*AUDIO BUTTON*/
+  #audio-wrapper{
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    position:absolute;
+    width:70px;
+    right: 0;
+    padding-right: 32%;
+  }
+  @media (min-width:1900px){
+     #audio-wrapper{
+      padding-right: 34%;
+     }
+  }
+  @media (max-width:1600px){
+    #audio-wrapper{
+     padding-right: 30%;
+    }
+ }
+ @media (max-width:1400px){
+  #audio-wrapper{
+   padding-right: 25%;
+  }
+}
+@media (max-width:1000px){
+  #audio-wrapper{
+   padding-right: 15%;
+  }
+}
+
+  .switch-audio{
+    width:30px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+  }
+ 
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(151, 117, 117);
+    border-radius: 2px;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    border-radius: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+input:checked + .slider {
+  background-color: #93e5cd;
+
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  background-color:rgb(251, 255, 251)
+}
+
+
  /*Bootstrap styles*/
  #button{
   width:30px;
@@ -341,6 +430,25 @@ body.modal-open div.modal-backdrop{
   }
   #directions i{
     font-size: 24;
+  }
+
+  /*------------JOB SCENE---------------*/
+  #rejected{
+    position:absolute;
+    top:1%;
+    padding-left:15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color:black;
+    
+  }
+  #jobFound{
+    position:absolute;
+    top:5%;
+    padding-left:15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    color:black;
   }
 
   /*ANIMATIONS*/

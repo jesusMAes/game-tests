@@ -348,15 +348,195 @@ export const jobNpcs = [
      {
       currentPhrase:0,
       content: [
-        ['Jesús', `Hello I'm looking for a job as frontend developer`],
-        ['Recruiter', `We are hiring!`],
-        ['Jesús', `NICE!`],
-        ['Recruiter', `This person must be responsable of user experiencia, graphic design, image editing, programming the interface...`],
-        ['Jesús', `Wait, thats not a employee, that's a full team`]
-
+      [`Jesús`,`Good morning I've seen your job offer for information proffesionals`],
+      ['Inner me', `I'm not only applying for developer jobs`],
+      ['Recruiter', `Yes, we are looking but you are a librarian`],
+      ['Jesús', `Librarians are information professionals`],
+      [`Recruiter`, `But we are looking for someone who has studied computer science and knows about databases and metadata`],
+      ['Jesús', `That's me, we librarians study those things`],
+      ['Recruiter', `Sorry, we are not looking for librarians`]
       ]
     },
+    {
+      currentPhrase:0,
+      content: [
+        ['Recruiter', `I said that we are not looking for librarians`]
+      ]
+    }
    
     ],
   },//recruiter 6
+  {
+    id: 'recruiter 7',
+    sprite: 'recruiter6',
+    spriteSrc: './Assets/Sprites/recruiter6.png',
+    frameWidth: 32,
+    frameHeight:30,
+    animationMapping:{ //moves
+      up:{
+        leftFoot:10,
+        standing: 0,
+        rightFoot:2
+      },
+      down:{
+        leftFoot:11,
+        standing:5,
+        rightFoot:8
+      },
+      left:{
+        leftFoot:3,
+        standing:6,
+        rightFoot:9
+      },
+      right:{
+        leftFoot:7,
+        standing:1,
+        rightFoot:4
+      }
+    },
+    randomMove: 4,//sprite don work nice
+    currentDialog: 0, 
+    canTalk: true,
+    dialogs:[
+     {
+      currentPhrase:0,
+      content: [
+      [`Jesús`,`Good morning I'm looking for a job as software developer`],
+      ['Recruiter', `You are lucky, we are hiring. Let's see your resume`],
+      ['Recruiter', `Oh, I see you don't have experience`],
+      ['Jesús', `I've just finished my studies`]
+      ['Recruiter', `We are looking for experienced people`]
+      ]
+    },
+    {
+      currentPhrase:0,
+      content:[
+        ['Jesús', `Hello again. I know that you are looking for experienced people but let me prove you that I can learn whatever it takes`],
+        ['Recruiter', `But you don't have experience`],
+        ['Jesús',`Give me just one week of onboarding and it will seem like I've been there for a year`],
+        ['Recruiter', `You don't have experience`]
+      ]
+    },
+    {
+      currentPhrase:0,
+      content:[
+        ['Recruiter', `You don't have experience`]
+      ]
+    }
+    ],
+  },//recruiter 7
+  {
+    id: 'recruiter 8',
+    sprite: 'recruiter7',
+    spriteSrc: './Assets/Sprites/recruiter7.png',
+    frameWidth: 32,
+    frameHeight:30,
+    animationMapping:{ //moves
+      up:{
+        leftFoot:10,
+        standing: 0,
+        rightFoot:2
+      },
+      down:{
+        leftFoot:11,
+        standing:0,//to look up, real is 5
+        rightFoot:8
+      },
+      left:{
+        leftFoot:3,
+        standing:6,
+        rightFoot:9
+      },
+      right:{
+        leftFoot:7,
+        standing:1,
+        rightFoot:4
+      }
+    },
+    randomMove: 0,//sprite don work nice
+    currentDialog: 0, 
+    canTalk: true,
+    dialogs:[
+     {
+      currentPhrase:0,
+      content: [
+      [`Recruiter`,`You don't have experience!`],
+      ['Jesús',`But I didn't say anything!`],
+      ['Inner me', `Wow, I am already rejected even before I apply. Quantum rejection`]
+      ]
+    },
+    {
+      currentPhrase:0,
+      content:[
+        ['Recruiter',`You don't have..`],
+        ['Jesús',`Okay, okay, I don't have experience`]
+      ]
+    }
+
+    ],
+  },//recruiter 8
+  {
+    id: 'recruiter 9',
+    sprite: 'recruiter8',
+    spriteSrc: './Assets/Sprites/recruiter8.png',
+    frameWidth: 32,
+    frameHeight:30,
+    animationMapping:{ //moves
+      up:{
+        leftFoot:10,
+        standing: 0,
+        rightFoot:2
+      },
+      down:{
+        leftFoot:11,
+        standing:5,
+        rightFoot:8
+      },
+      left:{
+        leftFoot:3,
+        standing:6,
+        rightFoot:9
+      },
+      right:{
+        leftFoot:7,
+        standing:1,
+        rightFoot:4
+      }
+    },
+    randomMove: 4,//sprite don work nice
+    currentDialog: 0, 
+    canTalk: true,
+    dialogs:[
+     {
+      currentPhrase:0,
+      content: [
+      [`Recruiter`,`Hi, we are looking for a junior developer`],
+      ['Jesús',`NICE! I'm a junior developer`],
+      ['Recruiter',`You must know html, CSS, Javascript, React, Bootstrap, Jquery, GSAP`],
+      ['Jesús', `Cool, I know all of them`],
+      ['Recruiter',`Node, Git, MongoDB, MySQL..`],
+      ['Jesús', `Okay`],
+      ['Recruiter', `Java, Java EE, Spring, Python, Ruby on rails`],
+      ['Jesús', `Are you sure you are looking for a JUNIOR?`],
+      ]
+    },
+    {
+      currentPhrase:0,
+      content: [
+        ['Recruiter', `Django, Laravel, Angular, Go, PHP, RESTful API, Javascript`],
+        ['Jesús', `I think you're starting to repeat yourself`],
+        ['Recruiter', `XAMP, Accesibility, XML, Springboot, Express js, Next Js...`]
+      ]
+    },
+    {
+      currentPhrase:0,
+      content:[
+        ['Recruiter', `Vue js, ASP.NET, Codelgniter, C#, Hibernate, phaser, Ember, Mithril, Shark, Agony...`],
+        ['Jesús', `I think you are making them up as you go along.`],
+        ['Recruiter', `Ehhh Wall js, buildPython, phpFloor, Car Js...`]
+      ]
+    }
+    ],
+  },//recruiter 9
+  
 ]

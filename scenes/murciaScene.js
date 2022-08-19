@@ -2,6 +2,7 @@ import Npc from "../classes/Npc.js";
 import Player from "../classes/Player.js";
 import {murciaEvents} from '../data/murciaEvents.js';
 import {murcianpcs} from '../data/murciaNpcs.js'
+import {music} from '../data/music.js'
 
 let dialogBox = document.getElementById('UI');
 let blackScreen = document.getElementById('blackScreen')//for transitions
@@ -55,6 +56,8 @@ class MurciaScene extends Phaser.Scene{
   init(data){
     //prepare data, use it when passing data between scenes
     spawnPoint=data
+    music.Sounds=[]//clean sounds
+    music.init()//check for mute
   }
 
   preload(){
@@ -549,7 +552,7 @@ class MurciaScene extends Phaser.Scene{
     //basic position algorithm 
     if(player.x +player.width > zone.x && player.x < zone.x + zone.width
       && player.y+player.height > zone.y &&
-      player.y < zone.y + zone.height){
+      player.y < zone.y + zone.height &&player.movable==true){
         
         switch(zone.name){
           case 'changeRoom':
@@ -604,6 +607,33 @@ class MurciaScene extends Phaser.Scene{
             loop:false,
             callback:()=>{
               this.scene.start('UniversityScene')
+            }
+          })
+          break
+          case 'changeJob':
+            player.movable = false
+            //gsap animation
+            gsap.to('#blackScreen',{
+              opacity:1,
+              duration:0.5,
+              onComplete:()=>{
+                gsap.to('#blackScreen',{
+                  backgroundColor: 'white',
+                  duration: 0.2,
+                  onComplete: ()=>{
+                    gsap.to('#blackScreen',{
+                      opacity:0,
+                      backgroundColor:'black'
+                    })
+                  }
+                })
+              }
+            })
+          this.time.addEvent({
+            delay:500,
+            loop:false,
+            callback:()=>{
+              this.scene.start('JobScene')
             }
           })
           break

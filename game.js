@@ -17,7 +17,7 @@ let config ={
   },
 
   title: 'Take a walk',
-  scene: [JobScene ,RoomScene, MurciaScene, UniversityScene, ],
+  scene: [RoomScene,JobScene, MurciaScene, UniversityScene, ],
   plugins:{
     scene:[{
       key: "gridEngine",

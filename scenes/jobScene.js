@@ -1,19 +1,46 @@
 import Npc from "../classes/Npc.js";
 import Player from "../classes/Player.js";
 import {jobEvents} from '../data/jobEvents.js';
-import {jobNpcs} from '../data/jobNpcs.js'
+import {jobNpcs} from '../data/jobNpcs.js';
+import {music} from '../data/music.js'
+
 
 //variables
 let dialogBox = document.getElementById('UI')
 
 let blackScreen = document.getElementById('blackScreen')//for transitions
 let gameContainer = document.getElementById('game-container')
-
 let talking = document.createElement('div') //name of the person that is talking
 talking.id = 'name';
 
+let rejectedResummes = document.createElement('div')
+rejectedResummes.id = 'rejected'
+let rejections = 0
+rejectedResummes.innerHTML =`Rejected Resummes: ${rejections}`;
+
+let rejectedSound = new Howl({
+  src:['./Assets/Sounds/hitSound.wav']
+})
+
+let jobFound = document.createElement('div');
+jobFound.id = 'jobFound'
+let aprovals = 0
+jobFound.innerHTML = `Jobs found: ${aprovals}`
+let aprovalsSound = new Howl({
+  src:['./Assets/Sounds/aproveSound.wav']
+})
+let citySound;
+//music
+
+
+//control audio
+
+let audioButton = document.getElementById('audio')
+
+
 //player variables
 let player;
+let escene;
 
 //events
 let eventData = jobEvents 
@@ -29,10 +56,19 @@ let phraseContent; //stores  speech content
 let i = 0 //count letters
 
 //NPC VARIABLES
-let npcData = jobNpcs ; //npc data when writted
+let npcData = jobNpcs ; //npc data, sprite & dialogs
 let allNpcs = [];
 let talkContent;
 let currentPhrase;
+
+//personaliced Event
+let userNpc;
+let yesButton = document.createElement('button');
+yesButton.id= 'yesButton'
+yesButton.innerHTML= 'YES'
+let noButton = document.createElement('button');
+noButton.id = 'noButton'
+noButton.innerHTML = 'NO'
 
 //switchZones
 let switchZones = []
@@ -44,7 +80,16 @@ class JobScene extends Phaser.Scene{
   }
 
   init(){
-    //prepare data
+    //prepare data, set sounds
+     citySound = new Howl({
+      src:['./Assets/Sounds/citySound.mp3'],
+      autoplay: true,
+      loop:true,
+      volume: 0.7
+    })
+    music.Sounds=[]//clean for previous sounds
+    music.Sounds = [rejectedSound, aprovalsSound, citySound] //add current sounds
+    music.init()//check current state of button
   }
 
   preload(){
@@ -63,13 +108,22 @@ class JobScene extends Phaser.Scene{
          this.load.spritesheet('recruiter3', './Assets/Sprites/recruiter3.png',{frameWidth:31, frameHeight: 32})
          this.load.spritesheet('recruiter4', './Assets/Sprites/recruiter4.png',{frameWidth:31, frameHeight: 32})
          this.load.spritesheet('recruiter5', './Assets/Sprites/recruiter5.png',{frameWidth:31, frameHeight: 34})
+         this.load.spritesheet('recruiter6', './Assets/Sprites/recruiter6.png',{frameWidth:32, frameHeight: 32})
+         this.load.spritesheet('recruiter7', './Assets/Sprites/recruiter7.png',{frameWidth:32, frameHeight: 35.7})
+         this.load.spritesheet('recruiter8', './Assets/Sprites/recruiter8.png',{frameWidth:31, frameHeight: 32})
+         this.load.spritesheet('recruiter9', './Assets/Sprites/recruiter9.png',{frameWidth:31, frameHeight: 32})
+         
+         
   }
 
   create(){
     //camera
     this.cameras.main.zoom = 1.6;
     this.cameras.main.width = 768;
+    escene =this
 
+
+    gameContainer.appendChild(rejectedResummes)
     //Map
     const jobMap = this.make.tilemap({key: 'jobMap'})
     const tileset = jobMap.addTilesetImage('pokemonTileset', 'tileset');
@@ -95,7 +149,6 @@ class JobScene extends Phaser.Scene{
     })
 
     //Create npcs
-    
    for(let i=0;i <npcData.length; i++){
     //find npc position in Tiled map
     const npcSpawn = jobMap.findObject('Npcs', npc => npc.name == npcData[i].id);
@@ -118,9 +171,51 @@ class JobScene extends Phaser.Scene{
       npc.init()
     })
 
+    //user npc
+    const userSpawn = jobMap.findObject('Recruiter', user => user.name == 'userSprite');
+
+    userNpc = new Npc({
+      scene:this,
+      x: userSpawn.x,
+      y: userSpawn.y,
+      spritesheet: 'recruiter9',
+      id: 'UserSpawn',
+      mapping: { //moves
+        up:{
+          leftFoot:10,
+          standing: 0,
+          rightFoot:2
+        },
+        down:{
+          leftFoot:11,
+          standing:5,
+          rightFoot:8
+        },
+        left:{
+          leftFoot:3,
+          standing:6,
+          rightFoot:9
+        },
+        right:{
+          leftFoot:7,
+          standing:1,
+          rightFoot:4
+        }
+      },
+      canTalk: true,
+      currentDialog:0,
+      dialogs: [],
+      randomMove:0
+    })
+    userNpc.init();
       
   //interact button
   interactButton = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+
+  //get switchZones
+  jobMap.findObject('changeZone', zone =>{
+    switchZones.push(zone)
+  })
   //grid Engine
   const gridEngineConfig = {
     characters:[
@@ -189,6 +284,37 @@ class JobScene extends Phaser.Scene{
     })
    })
 
+   //add user npc to grid engine
+   gridEngineConfig.characters.push({
+    id: userNpc.id,
+    sprite: userNpc,
+    walkingAnimationMapping:{
+      up:{
+        leftFoot:userNpc.mapping.up.leftFoot,
+        standing: userNpc.mapping.up.standing,
+        rightFoot: userNpc.mapping.up.rightFoot
+      },
+      down:{
+        leftFoot:userNpc.mapping.down.leftFoot,
+        standing: userNpc.mapping.down.standing,
+        rightFoot: userNpc.mapping.down.rightFoot
+      },
+      left:{
+        leftFoot: userNpc.mapping.left.leftFoot,
+        standing: userNpc.mapping.left.standing,
+        rightFoot: userNpc.mapping.left.rightFoot
+      },
+      right: {
+        leftFoot: userNpc.mapping.right.leftFoot,
+        standing: userNpc.mapping.right.standing,
+        rightFoot: userNpc.mapping.right.rightFoot
+      }
+    },
+    startPosition:{x: userNpc.x, y: userNpc.y},
+    speed: 2
+
+   })
+
   this.gridEngine.create(jobMap, gridEngineConfig);
 
   //move npcs
@@ -218,6 +344,14 @@ class JobScene extends Phaser.Scene{
     if(npc.canTalk == true){
       this.checkNpc(npc)
     }
+  })
+
+  //check for your npc
+  this.checkUserNpc()
+  
+  //check for scene change
+  switchZones.forEach(zone =>{
+    this.switchZones(zone)
   })
 
     //KEYBOARD
@@ -292,7 +426,6 @@ class JobScene extends Phaser.Scene{
     //get the content of dialog
     
     currentDialog = currentEventData.currentDialog
-    console.log(currentEventData.currentDialog)
     let numberOfCurrentPhrase = currentEventData.dialogs[currentDialog].currentPhrase 
     
     actualPhrase = currentEventData.dialogs[currentDialog].content[numberOfCurrentPhrase];
@@ -469,6 +602,9 @@ class JobScene extends Phaser.Scene{
     //update dialog
     if(npc.dialogs[npc.currentDialog+1] != undefined){
       npc.currentDialog +=1;
+      rejections++;
+      rejectedResummes.innerHTML = `Rejected Resummes: ${rejections}`;
+      rejectedSound.play()
      //update data for switch scene
      npcData.forEach(data =>{
       if(data.id== npc.id){
@@ -478,6 +614,10 @@ class JobScene extends Phaser.Scene{
 
     }else {
       npc.dialogs[npc.currentDialog].currentPhrase =0;
+      rejections++;
+      rejectedResummes.innerHTML = `Rejected Resummes: ${rejections}`;
+      rejectedSound.play()
+
     }
 
     //exit conversation
@@ -518,6 +658,153 @@ class JobScene extends Phaser.Scene{
     }
 
   }//typewriter
+
+  checkUserNpc(){
+    let distance =  Phaser.Math.Distance.Between(player.x,player.y,userNpc.x, userNpc.y)
+
+    //listen for talk
+    if(distance < 50 && distance > 0){
+      //first interaction
+      if(interactButton.isDown && interactButton.keyCode ==65
+         && player.isTalking == false){
+          this.userNpcEvent()
+      }
+    }
+
+    //activate emotions
+    if(distance <55 && distance >50){
+      player.emotes()
+    }else if(distance > 55 && distance <60){
+      player.emotions.visible = false
+    }
+  }//check user npc
+
+  userNpcEvent(){
+    player.movable=false;
+    interactButton.keyCode =80;
+    player.isTalking = true;
+    setTimeout(userNpc.emotes.bind(userNpc), 150)
+    //write the dialog
+
+    let talk = 'Jesús'
+    let dialogContent =  `Hi! I'm a junior developer, would you give me a chance?`
+
+     dialogBox.style.display = 'block';
+     dialogBox.innerHTML=''
+     dialogBox.appendChild(talking);
+     talking.innerHTML = talk
+
+     let writer = function(){
+
+      if(i < dialogContent.length){
+        dialogBox.innerHTML += dialogContent.charAt(i);
+        i++
+        setTimeout(writer, 50)
+      }else{
+        i=0
+       setTimeout( escene.addButtons, 300)
+      }
+
+     }//writer function
+
+     writer()
+  }
+
+  addButtons(){
+    talking.innerHTML= 'You'
+    dialogBox.innerHTML = 'What do you say?'
+    dialogBox.appendChild(talking);
+    dialogBox.appendChild(yesButton);
+    dialogBox.appendChild(noButton);
+    yesButton.addEventListener('click', escene.handleButtons);
+    noButton.addEventListener('click', escene.handleButtons);
+  }
+
+  handleButtons(e){
+    //get source
+    let source = e.target.id;
+
+    if(source == 'yesButton'){
+      //open mail
+      window.open("mailto:jesusmarmolesp@gmail.com?subject=Job%20offer&body=Hello!")
+
+      //sound & div
+      gameContainer.appendChild(jobFound);
+      aprovals++;
+      jobFound.innerHTML = `Jobs found: ${aprovals}`;
+      aprovalsSound.play()
+
+      //clear box and unlock player
+      dialogBox.removeChild(yesButton)
+      dialogBox.removeChild(noButton)
+      dialogBox.innerHTML = ''
+      dialogBox.style.display= 'none'
+      player.movable = true
+      player.isTalking = false
+
+      setTimeout(()=> interactButton.keyCode =65)
+    }else if(source == 'noButton'){
+      //just go out
+      dialogBox.removeChild(yesButton)
+      dialogBox.removeChild(noButton)
+      rejections++;
+      rejectedResummes.innerHTML = `Rejected Resummes: ${rejections}`;
+      rejectedSound.play()
+      dialogBox.innerHTML = ''
+      dialogBox.style.display= 'none'
+      player.movable = true
+      player.isTalking = false
+
+      setTimeout(()=> interactButton.keyCode =65)
+    }
+
+  }//handleButtons
+
+
+  //switchzones
+  switchZones(zone){
+    //basic position algorithm 
+    if(player.x +player.width > zone.x && player.x < zone.x + zone.width
+      && player.y+player.height > zone.y &&
+      player.y < zone.y + zone.height && player.movable == true){
+       
+        //clean interface
+        let erase = document.getElementById('rejected')
+        if(erase != undefined){erase.remove()}
+        let erase1 = document.getElementById('jobFound')
+        if(erase1 !=undefined){erase1.remove()}
+        audios.forEach(audio =>{audio.mute(true)})
+        audios =[]
+        switch(zone.name){
+          case 'changeZone':
+            player.movable = false
+            //gsap animation
+            gsap.to('#blackScreen',{
+              opacity:1,
+              duration:0.5,
+              onComplete:()=>{
+                gsap.to('#blackScreen',{
+                  backgroundColor: 'white',
+                  duration: 0.2,
+                  onComplete: ()=>{
+                    gsap.to('#blackScreen',{
+                      opacity:0,
+                      backgroundColor:'black'
+                    })
+                  }
+                })
+              }
+            })
+          this.time.addEvent({
+            delay:500,
+            loop:false,
+            callback:()=>{
+              this.scene.start('MurciaScene', 'jobSpawn')
+            }
+          })
+        }
+      }//end if
+  }
 
 
 }//END CLASS

@@ -1,9 +1,26 @@
 import Player from "../classes/Player.js";
+import AudioManager from "../classes/audioManager.js"
 import { roomData } from "../data/roomData.js";
+import {music} from '../data/music.js'
 
 
 let dialogBox = document.getElementById('UI');
 let blackScreen = document.getElementById('blackScreen')//for transitions
+
+//sound 
+let roomMusic = new Howl({
+  src:['./Assets/Sounds/roomScene.mp3'],
+  autoplay:true,
+  loop:true,
+  volume:0.7
+})
+
+let audioButton = document.getElementById('audio')
+
+
+audioButton.addEventListener('click', function(e){
+  music.mute(e)
+},false )
 
 //get event data
 let data = roomData
@@ -54,6 +71,9 @@ class RoomScene extends Phaser.Scene{
 
   init(){
     //prepare data
+     //sound
+     music.Sounds=[roomMusic]
+     music.init()
   }
 
   preload(){
@@ -84,6 +104,7 @@ class RoomScene extends Phaser.Scene{
     this.cameras.main.zoom=2
     this.cameras.main.width=768
 
+   
     //render map
     const map  = this.make.tilemap({key:'map'})
 
@@ -547,6 +568,7 @@ class RoomScene extends Phaser.Scene{
       && player.y+player.height > zone.y){
         
         player.movable = false
+        music.clean()
         //gsap animation
         gsap.to('#blackScreen',{
           opacity:1,

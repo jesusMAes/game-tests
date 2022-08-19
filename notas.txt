@@ -144,3 +144,30 @@ Los dialogos con npc funcionan como ya tenía documentado con la diferencia de q
 16/8 MAPA universidad hecho, quedo pegándome con los diálogos de eventos que funcionan igual que los de npc pero es más complicado acceder a su dialogo
 
 18/8 hecho mapa zona de trabajo, escritos dialogos, el codigo copiado de anteriores zonas funcina bien, a medio escribir dialogos 
+
+
+
+He metido los audios, el codigo es sencillo, antes de la clase creamos un howl con cada audio, los metemos en un array audios, es importante meterlos aquí para que al cargar funcione, pero luego en create repetimos ese código, esto es porque en la función switchzone vamos a recorrer ese array, pausarlo todo y luego decir que el array es igual a =[] para vaciarlo, al volver a entrar se volverá a llenar
+
+TODO: Añadir atribuciones de la musica, la de jobscene es:  Afternoon Nap by Ghostrifter Official | https://soundcloud.com/ghostrifter-official
+// Music promoted by https://www.chosic.com/free-music/all/
+// Creative Commons CC BY-SA 3.0
+// https://creativecommons.org/licenses/by-sa/3.0/
+
+la de la escena Room es: Departure by Ghostrifter Official | https://soundcloud.com/ghostrifter-official
+Music promoted by https://www.chosic.com/free-music/all/
+Creative Commons CC BY-SA 3.0
+https://creativecommons.org/licenses/by-sa/3.0/
+
+
+AUDIOMANAGER: hay un problema cuando trabajamos con howls y es que si los creas fuera de los metodos de clase de la escena se cargan todos a la vez y los que tengan autoplay se reproducen pero si los creas en la escena para poder acceder a ellos por temas de scope no te deja. Además al cambiar de escena los sonidos de la anterior siguen sonando, la solución a esto ha sido crear una clase y un data
+
+La clase es audioManager, es una clase sencilla con una propiedad y tres métodos, la propiedad almacena los sonidos que tenemos en marcha, en el método init de cada escena añadimos los sonidos que queremos en ella, el metodo init de nuestra clase comprueba el estado actual del botón de audio, que solo tiene un addEventlistener en la primera escena si lo metiesemos en todas se rompería
+
+Así metemos el addEventlistener en la escena de la habitación, ese addEventlistener va a llamar a la función mute, que va a coger el checked del botón y pasar por todos los sonidos que tengamos almacenados en el objeto en ese momento poniendoles mute o quitándoselo. Al salir de una escena tenemos que llamar al metodo clean que lo pone todo en mute. 
+
+Al entrar en la siguiente escena primero decimos que music.sounds=[] para vaciarlo, como al salir muteamos esos sonidos ahí se quedan en el limbo silenciosos, cuando los volvamos agregar al volver al cuarto pues el metodo init chequeará y los desmuteará
+
+luego le decimos music.sounds =[] un array con los sonidos, y después music.init para inicializarlos
+
+Es importante importar music en todas las escenas porque es un objeto aparte que llamamos en la primera escena y vamos modificando durante el juego. no es como player que lo instanciamos en cada una, en este nos interesa que los cambios permanezcan y si sacamos un sonido se vaya, si no acabaríamos con 500 objetos music sonando por ahí sin saber por qué así mantenemos integridad y si hay que añadir cosas está todo junto
