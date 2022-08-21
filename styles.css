@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Jura&display=swap');
 
 button{
   display: block;
@@ -15,14 +15,24 @@ canvas{
 /*Portfolio styles*/
 body{
   background-color:#16161a !important;
+  max-width: 100%;
 }
 
 .navigation{
   width: 100%;
   color:#fffe !important;
-  margin-bottom: 20px;
+  position: fixed !important;
+  background-color: rgba(22, 22, 26, 0.8);
   font-size: 1.5rem;
   display: flex !important;
+  z-index: 15;
+}
+.navigation a{
+  text-decoration: none;
+  color: #fffe;
+}
+.active{
+ color:#93e5cd !important
 }
 .burguer-button, .burguer-button span{
   display: inline-block;
@@ -146,7 +156,7 @@ body{
 }
 
 #presentation{
-  height:90vh;
+  height:100vh;
   background:linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);
   color:#fffe;
   margin-bottom: 20px;
@@ -155,6 +165,9 @@ body{
 .introduction{
   align-items: center;
   text-align: center;
+}
+#introductionPanel{
+  display:none
 }
 #avatar{
   width:100px;
@@ -209,12 +222,109 @@ body{
   }
 }
 
+#game-wrapper{
+  margin-top:100px;
+}
+
+#skills{
+  
+  width: 100%;
+  margin-top: 40px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Jura', sans-serif;
+  color:#fffe
+}
+
+#skillList{
+  width:100%;
+  height: 50px;
+  background-color: #93e5cd;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+#htmlIcon{
+  font-size: 2rem;
+  color: #e34c26;
+  padding: 10px;
+  margin-left: 30px;
+}
+#jsIcon{
+  font-size: 2rem;
+  color: #f0db4f;
+  padding: 10px;
+  margin-left: 30px;
+  background-clip: content-box;
+  background-color: #323330	;
+}
+#reactIcon{
+  font-size: 2rem;
+  color: #37707e;
+  padding: 10px;
+  margin-left: 30px;
+}
+#bootstrapIcon{
+  font-size: 2rem;
+  background:linear-gradient(#602C50, #080135);;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding: 10px;
+  margin-left: 30px;
+}
+#nodeIcon{
+  font-size: 2rem;
+  color: #3C873A;
+  padding: 10px;
+  margin-left: 30px;
+}
+#mysqlIcon{
+  width:30px;
+  margin-left: 30px;
+}
+#sassIcon{
+  font-size: 2rem;
+  color: #CD6799;
+  padding: 10px;
+  margin-left: 30px;
+}
+#reduxIcon{
+  width:30px;
+  margin-left: 30px;
+}
+#PhaserIcon{
+  width:30px;
+  margin-left: 30px;
+}
+#gitIcon{
+  font-size: 2rem;
+  color: #F1502F;
+  padding: 10px;
+  margin-left: 30px;
+}
+#mongoIcon{
+  width:30px;
+  margin-left: 30px;
+}
+#javaIcon{
+  width:30px;
+  margin-left: 30px;
+}
+
+
 /*Game Related styles*/
 #game-container{
   width: 768;
   max-width: 800;
   margin: 0 auto;
   margin-left: auto;
+}
+#game-container div:nth-child(4){
+  width:350px;
+  max-width: 350px;
 }
 
 body.modal-open div.modal-backdrop{
@@ -248,7 +358,7 @@ body.modal-open div.modal-backdrop{
   border-radius: 10px;
   background-color: antiquewhite;
   position: absolute;
-  top:435;
+  margin-top: 400px;
   margin-left: auto;
   margin-right: auto;
   left:0;
@@ -503,12 +613,11 @@ input:checked + .slider:before {
     text-align: center;
     display: none;
     position: absolute;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left:50px;
     margin-left: auto;
     margin-right: auto;
-    top:5%;
-    left:0;
+    margin-top:100px;
+    left:40px;
     right: 0;
   }
 
@@ -598,7 +707,7 @@ input:checked + .slider:before {
   #universitySign{
     background-color: antiquewhite;
     position: absolute;
-    top:20%;
+    margin-top:-400px;
     left: 40%;
     text-align: center;
     vertical-align: center;
@@ -614,12 +723,11 @@ input:checked + .slider:before {
   #directions{
     background-color: antiquewhite;
     position: absolute;
-    top:20%;
+    margin-top:-400px;
     left:40%;
     text-align: center;
     vertical-align: center;
     padding-top:70px;
-
     font-family: 'Press Start 2P', cursive;
     width:400px;
     height:200px;
