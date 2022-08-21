@@ -19,18 +19,30 @@ tl.to('#myname',{
   rotation: 20,
   duration: .5,
 })
+tl.to('#avatar',{
+  y:-150,
+  x:130,
+  duration:.5
+},'<')
 tl.to('#myname', {
   x:0,
   rotation:0,
   duration:.1
 })
+tl.to('#avatar',{
+  y:0,
+  x:0,
+  duration:1
+},'<')
 tl.to('#myname',{
   marginBottom:40,
   duration:.2
-})
+},'<')
 tl.to('#myname',{
   marginBottom:0
-})
+},'>')
+
+
 let compressed = 'compressed'
 let navbar = document.getElementById('links')
 burguerButton.addEventListener('click',()=>{

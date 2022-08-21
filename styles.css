@@ -156,11 +156,19 @@ body{
   align-items: center;
   text-align: center;
 }
+#avatar{
+  width:100px;
+  margin-top: 200px;
+  border-radius: 50% ;
+}
 #myname{
   font-family: 'Alata', sans-serif;
-  padding-top: 200px;
   margin-left:150px;
   font-size: 4.5rem;
+}
+#subtitle{
+  font-size: 1.2rem;
+  font-family: 'Alata', sans-serif;
 }
 
 .waves{
