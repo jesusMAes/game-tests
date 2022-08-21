@@ -1,5 +1,5 @@
 import Player from "../classes/Player.js";
-import AudioManager from "../classes/audioManager.js"
+import AudioManager from "../classes/AudioManager.js"
 import { roomData } from "../data/roomData.js";
 import {music} from '../data/music.js'
 
