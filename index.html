@@ -10,14 +10,42 @@
       <!--jquery-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!--jquery-->
-        <!--epub js-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
-       
-        <!--epub js-->
+  <!--epub js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+  <!--epub js-->
+  <!--Meta-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of Jesús Mármol">
+  <meta name="keywords" content="javascript, portfolio, fullstack developer">
+  <meta name="authos" content="Jesús Mármol">
     <title>Cv Phaser</title>
   </head>
   <body>
+    <nav class="navigation navbar navbar-expand-sm">
+      <div class="burguer-button" id="burguerButton"  data-toggle="collapse" data-target="#collapsible">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    <div id="collapsible">
+    <ul class="links navbar-nav" id="links">
+      <li class="nav-item">Home</li>
+      <li class="nav-item">Projects</li>
+      <li class="nav-item">About</li>
+      <li class="nav-item">Contact</li>
+    </ul>
+  </div>
+    <p class="logo navbar-brand"> Jesús Mármol</p>
+    </nav>
+    <section id="presentation">
+      Introduction fancy effects , right a circle with my face in picrew, when interact effect.
+      <div class="introduction">
+      <p id="myName">Hi! I'm Jesús Mármol</p>
+      <p>Web developer, librarian, journalist, community manager</p>
+    </div>
+ 
+    </section>
     <div id="game-wrapper"></div>
     <div id="blackScreen"></div>
     <div id="game-container">
@@ -35,6 +63,7 @@
       </div>
     </div>
    
+   
     <!--Howler-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Howler-->
@@ -44,6 +73,8 @@
     <!--gsap-->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js" integrity="sha512-VEBjfxWUOyzl0bAwh4gdLEaQyDYPvLrZql3pw1ifgb6fhEvZl9iDDehwHZ+dsMzA0Jfww8Xt7COSZuJ/slxc4Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--gsap-->
+     <!--portfolio dom-->
+     <script src="portfolio.js"></script>
     <!--Phaser-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js" integrity="sha512-kg6fSrg6FkD9Ua02PzuA289KatVkTp6HdiFrSKwnz1bKBeKe5JG54rNeYZeghYO/I4ka49rb9H/9Ezcq9Se3iQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!--Phaser-->
