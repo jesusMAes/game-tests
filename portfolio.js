@@ -11,13 +11,12 @@ burguerButton.addEventListener('click', (e)=>{
 
 const navButtons = gsap.utils.toArray(".nav-item a");
 const panels =gsap.utils.toArray(".panel");
-console.log(navButtons)
-console.log(panels)
 
+//nav animation
 panels.forEach((panel,i) =>{
   ScrollTrigger.create({
     trigger: panel,
-    start: "start 50%",
+    start: "top 50%",
     onEnter:()=>{
       navButtons.forEach((e)=>{
         e.classList.remove("active");
@@ -32,7 +31,7 @@ panels.forEach((panel,i) =>{
     }
   });
 });
-
+//introduction animation
 let tl = gsap.timeline()
 //intro effect
 tl.from('#myname',{
@@ -73,4 +72,45 @@ let navbar = document.getElementById('links')
 burguerButton.addEventListener('click',()=>{
   navbar.classList.toggle(compressed)
   console.log(navbar)
+})
+
+//projects info
+const projects = gsap.utils.toArray('.project');
+let description;
+let stack;
+
+projects.forEach(project =>{
+  project.addEventListener('mouseenter', ()=>{
+    description = project.querySelector('.projectDescription')
+    stack = project.querySelector('.stack')
+   
+    gsap.to(description,{
+      height: '100%',
+      color: '#fffe',
+      paddingTop:'40px',
+      display:'block',
+      duration:.5
+    })
+    gsap.to(stack, {
+      display:'block',
+      duration:.1
+    })
+  })
+  project.addEventListener('mouseleave', ()=>{
+    description = project.querySelector('.projectDescription')
+    stack = project.querySelector('.stack')
+    gsap.to(stack, {
+      display:'none',
+      duration:.1
+    })
+    gsap.to(description,{
+      height: '0px',
+      display:'none',
+      paddingTop:0,
+      color:'transparent',
+      duration:.5,
+      ease: 'expo'
+    },'<')
+  })
+
 })

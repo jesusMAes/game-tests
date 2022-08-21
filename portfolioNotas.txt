@@ -1,0 +1,8 @@
+----------------This is a devlog with notes for my future self
+
+Okay, ya he comenzado el portfolio, poco a poco va saliendo comenzamos con un nav que usa la clase de bootstrap navbar y expand sm, es decir en dispositivos pequeños se vuelve una lista vertical, dentro de la nav hay un burguer button con el atributo data togle y data target, controla  cuando colapsa el menu
+
+tras el botón tenemos un div con el id collapsible para que bootstrap sepa cual collapsar, dentro un ul con la clase links para mis estilos y navbar nav para que bootstrap los ponga como lista al colapsar, cada enlace tiene nav-item por eso mismo
+Al margen tenemos un p que es mi nombre y lleva navbar-brand para que lo ponga al lado al collapsar, hay que ajustar esto para que se vea el botón, mi nombre y debajo los enlaces, ahora se ve con los enlaces vertical al lado del botón, imagino que poniendoles block y ancho se ponen bien
+
+Vamos a estar usando Gsap para las animaciones así que tenemos un js llamado portfolio desde ahí animamos las cosas. Tras el nav va una sección llamada pressentation, tiene dos partes: el div introduction y el div  que dibuja las olas
