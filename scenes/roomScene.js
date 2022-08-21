@@ -14,6 +14,10 @@ let roomMusic = new Howl({
   loop:true,
   volume:0.7
 })
+let bip = new Howl({
+  src:['./Assets/Sounds/talkbip.wav'],
+  volume:0.3
+})
 
 let audioButton = document.getElementById('audio')
 
@@ -72,7 +76,7 @@ class RoomScene extends Phaser.Scene{
   init(){
     //prepare data
      //sound
-     music.Sounds=[roomMusic]
+     music.Sounds=[roomMusic, bip]
      music.init()
   }
 
@@ -368,6 +372,7 @@ class RoomScene extends Phaser.Scene{
     
     if(i < currentDialog.length){
       dialogBox.innerHTML += currentDialog.charAt(i);
+      bip.play()
       i++
       setTimeout(this.typeWritter.bind(this), 5, )
     }else{

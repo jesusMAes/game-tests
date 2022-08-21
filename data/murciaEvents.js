@@ -40,6 +40,14 @@ export const murciaEvents =[
       ['Jesús', 'This tree is oldest than my father'],
       ['Jesús', `I've heard they want to cut it down to build a shop`]
     ]
+  },
+  {
+    id:'barrier',
+    position:5,
+    currentDialog:0,
+    content:[
+      ['Jesús', 'Developers zone is under construction'],
+    ]
   }
 
 ]

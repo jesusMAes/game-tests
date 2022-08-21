@@ -29,14 +29,13 @@ jobFound.innerHTML = `Jobs found: ${aprovals}`
 let aprovalsSound = new Howl({
   src:['./Assets/Sounds/aproveSound.wav']
 })
-let citySound;
+
 //music
-
-
-//control audio
-
-let audioButton = document.getElementById('audio')
-
+let citySound;
+let bip = new Howl({
+  src:['./Assets/Sounds/talkbip.wav'],
+  volume:0.3
+})
 
 //player variables
 let player;
@@ -61,7 +60,7 @@ let allNpcs = [];
 let talkContent;
 let currentPhrase;
 
-//personaliced Event
+//personalized Event
 let userNpc;
 let yesButton = document.createElement('button');
 yesButton.id= 'yesButton'
@@ -81,14 +80,14 @@ class JobScene extends Phaser.Scene{
 
   init(){
     //prepare data, set sounds
-     citySound = new Howl({
+     citySound = new Howl({ //autoplay howls must be declared here
       src:['./Assets/Sounds/citySound.mp3'],
       autoplay: true,
       loop:true,
       volume: 0.7
     })
     music.Sounds=[]//clean for previous sounds
-    music.Sounds = [rejectedSound, aprovalsSound, citySound] //add current sounds
+    music.Sounds = [rejectedSound, aprovalsSound, citySound, bip] //add current sounds
     music.init()//check current state of button
   }
 
@@ -120,7 +119,7 @@ class JobScene extends Phaser.Scene{
     //camera
     this.cameras.main.zoom = 1.6;
     this.cameras.main.width = 768;
-    escene =this
+    escene = this
 
 
     gameContainer.appendChild(rejectedResummes)
@@ -446,6 +445,7 @@ class JobScene extends Phaser.Scene{
   eventWritter(){
     if(i < phraseContent.length){
       dialogBox.innerHTML += phraseContent.charAt(i);
+      bip.play()
       i++
       this.time.addEvent({ //less problems with scope that timeout
         delay:50,
@@ -640,6 +640,7 @@ class JobScene extends Phaser.Scene{
   typeWriter(npc){
     if(i < talkContent.length){
       dialogBox.innerHTML += talkContent.charAt(i);
+      bip.play()
       i++
       this.time.addEvent({ //less problems with scope that timeout
         delay:50,
@@ -698,6 +699,7 @@ class JobScene extends Phaser.Scene{
 
       if(i < dialogContent.length){
         dialogBox.innerHTML += dialogContent.charAt(i);
+        bip.play()
         i++
         setTimeout(writer, 50)
       }else{
@@ -773,8 +775,7 @@ class JobScene extends Phaser.Scene{
         if(erase != undefined){erase.remove()}
         let erase1 = document.getElementById('jobFound')
         if(erase1 !=undefined){erase1.remove()}
-        audios.forEach(audio =>{audio.mute(true)})
-        audios =[]
+        music.clean()
         switch(zone.name){
           case 'changeZone':
             player.movable = false

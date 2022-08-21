@@ -20,6 +20,7 @@ let player;
 let events =[]; //store the map events
 let data = murciaEvents; //store all events
 let eventData; // store current event data
+let dataPosition;
 let interactButton;
 let signOpen; //flag to open/close signal div
 
@@ -46,6 +47,12 @@ let i =0;
 let switchZones =[]
 let spawnPoint
 
+let murciaSound;
+let bip = new Howl({
+  src:['./Assets/Sounds/talkbip.wav'],
+  volume:0.3
+})
+
 //class & methods
 class MurciaScene extends Phaser.Scene{
   constructor(){
@@ -56,7 +63,15 @@ class MurciaScene extends Phaser.Scene{
   init(data){
     //prepare data, use it when passing data between scenes
     spawnPoint=data
+
+    murciaSound = new Howl({
+      src:['./Assets/Sounds/murciaSound.mp3'],
+      autoplay:true,
+      loop:true,
+      volume:0.5
+    })
     music.Sounds=[]//clean sounds
+    music.Sounds=[murciaSound,bip]
     music.init()//check for mute
   }
 
@@ -310,11 +325,13 @@ class MurciaScene extends Phaser.Scene{
     
     //pause player
     player.movable=false
+    player.isTalking=true
     interactButton.keyCode = 80;
     //get data 
     data.forEach(object =>{
       if(event.name == object.id){
         eventData = object
+        dataPosition = object.position
       }
     })
    //get current dialog
@@ -330,18 +347,19 @@ class MurciaScene extends Phaser.Scene{
     let content = dialog[1]
     let writer =function(){
       if(i < content.length){
+        bip.play()
         dialogBox.innerHTML += content.charAt(i);
         i++
-        setTimeout(writer.bind(this), 5)
+        setTimeout(writer.bind(this), 50)
       }else{
         //update dialog
         if(data[eventData.position].currentDialog < data[eventData.position].content.length-1){
         data[eventData.position].currentDialog++
         player.movable = true
-          player.isTalking= false
           setTimeout(function(){
             dialogBox.style.display = 'none'
             talking.innerHTML = ''
+            player.isTalking= false
           },500)
          
           setTimeout(interactButton.keyCode = 65, 1000)
@@ -349,10 +367,11 @@ class MurciaScene extends Phaser.Scene{
           data[eventData.position].currentDialog = data[eventData.position].content.length-1;
           //no more dialogs, close
           player.movable = true
-          player.isTalking= false
+          
           setTimeout(function(){
             dialogBox.style.display = 'none'
             talking.innerHTML = ''
+            player.isTalking= false
           },500)
          
           setTimeout(interactButton.keyCode = 65, 1000)
@@ -529,6 +548,7 @@ class MurciaScene extends Phaser.Scene{
   typeWriter(npc){
     if(i < talkContent.length){
       dialogBox.innerHTML += talkContent.charAt(i);
+      bip.play()
       i++
       this.time.addEvent({ //less problems with scope that timeout
         delay:50,
@@ -553,7 +573,7 @@ class MurciaScene extends Phaser.Scene{
     if(player.x +player.width > zone.x && player.x < zone.x + zone.width
       && player.y+player.height > zone.y &&
       player.y < zone.y + zone.height &&player.movable==true){
-        
+        music.clean()
         switch(zone.name){
           case 'changeRoom':
             player.movable = false

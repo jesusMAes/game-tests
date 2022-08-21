@@ -2,6 +2,7 @@ import Npc from "../classes/Npc.js";
 import Player from "../classes/Player.js";
 import {universityEvents} from '../data/universityEvents.js' ;
 import {universityNpcs} from '../data/universityNpcs.js'
+import {music} from '../data/music.js'
 
 //Variables
 let dialogBox = document.getElementById('UI');
@@ -37,6 +38,11 @@ let currentPhrase;
 //switchZones
 let switchZones = []
 
+let universitySound
+let bip = new Howl({
+  src:['./Assets/Sounds/talkbip.wav'],
+  volume:0.3
+})
 //scene class
 class UniversityScene extends Phaser.Scene{
   constructor(){
@@ -45,7 +51,15 @@ class UniversityScene extends Phaser.Scene{
 
   init(){
     //prepare data
-
+    universitySound = new Howl({
+      src:['./Assets/Sounds/universitySound.mp3'],
+      autoplay:true,
+      loop:true,
+      volume:0.6
+    })
+    music.Sounds=[];
+    music.Sounds =[universitySound,bip]
+    music.init()
   }
 
   preload(){
@@ -304,7 +318,6 @@ class UniversityScene extends Phaser.Scene{
     //get the content of dialog
     
     currentDialog = currentEventData.currentDialog
-    console.log(currentEventData.currentDialog)
     let numberOfCurrentPhrase = currentEventData.dialogs[currentDialog].currentPhrase 
     
     actualPhrase = currentEventData.dialogs[currentDialog].content[numberOfCurrentPhrase];
@@ -325,6 +338,7 @@ class UniversityScene extends Phaser.Scene{
   eventWritter(){
     if(i < phraseContent.length){
       dialogBox.innerHTML += phraseContent.charAt(i);
+      bip.play()
       i++
       this.time.addEvent({ //less problems with scope that timeout
         delay:50,
@@ -516,6 +530,7 @@ class UniversityScene extends Phaser.Scene{
   typeWriter(npc){
     if(i < talkContent.length){
       dialogBox.innerHTML += talkContent.charAt(i);
+      bip.play()
       i++
       this.time.addEvent({ //less problems with scope that timeout
         delay:50,
@@ -540,7 +555,7 @@ class UniversityScene extends Phaser.Scene{
     if(player.x +player.width > zone.x && player.x < zone.x + zone.width
       && player.y+player.height > zone.y &&
       player.y < zone.y + zone.height){
-        
+        music.clean()
         switch(zone.name){
           case 'changeZone':
             player.movable = false

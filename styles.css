@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
 
 button{
   display: block;
@@ -11,7 +12,159 @@ canvas{
   margin-right: auto;
 }
 
+/*Portfolio styles*/
+body{
+  background-color:#16161a !important;
+}
 
+.navigation{
+  width: 100%;
+  color:#fffe !important;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  display: flex !important;
+}
+.burguer-button, .burguer-button span{
+  display: inline-block;
+  box-sizing: border-box;
+}
+.burguer-button{
+  position:relative;
+  width: 45px;
+  height: 44px;
+  margin-left: 30px;
+  background: none;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+}
+.burguer-button span{
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: #fffe;
+  border-radius: 4px;
+}
+.burguer-button span:nth-of-type(1){
+  top:0;
+  left: 0;
+  transform-origin: 0,0;
+  animation: menu-bar1-close .2s forwards;
+}
+.burguer-button span:nth-of-type(2){
+  top:20px;
+  left: 0;
+  transition: .2s;
+}
+.burguer-button span:nth-of-type(3){
+ right: 0;
+ bottom: 0;
+ transform-origin: 100% 0;
+ animation: menu-bar3-close .2s forwards
+}
+
+.burguer-button.active span:nth-of-type(1){
+  animation: menu-bar1-open .4s forwards;
+}
+.burguer-button.active span:nth-of-type(2){
+  transform: rotate(-45deg);
+  transition-delay: .2s;
+}
+
+.burguer-button.active span:nth-of-type(3){
+  animation: menu-bar3-open .4s forwards
+}
+
+/*Burguer keyframes*/
+@keyframes menu-bar1-open {
+  0%{
+    width: 100%;
+    transform: rotate(0deg) translate(0);
+  }
+  50%{
+    width: 51%;
+    transform: rotate(0deg) translate(0);
+  }
+  100%{
+    width: 51%;
+    transform: rotate(45deg) translate(10px, 7px);
+  }
+}
+@keyframes menu-bar1-close {
+    0%{
+      width: 51%;
+      transform: rotate(45deg) translate(8px, -4px);
+    }
+    100%{
+      width:100%;
+      transform:rotate(0deg) translate(0);
+    }
+}
+@keyframes menu-bar3-open {
+    0%{
+      width:100%;
+      transform: rotate(0deg) translate(0);
+    }
+    50%{
+      width: 51%;
+      transform: rotate(0deg) translate(0);
+    }
+    100%{
+      width: 51%;
+      transform: rotate(45deg) translate(-6px, 3px);
+    }
+}
+@keyframes menu-bar3-close {
+    0%{
+      width: 51%;
+      transform: rotate(45deg) translate(-6px, 3px);
+    }
+    100%{
+      width: 100%;
+      transform: rotate(0deg) translate(0);
+    }
+}
+
+#collapsible{
+  max-width: 500px;
+}
+.navigation .logo{
+  margin-left: auto;
+  margin-top: 10px;
+  
+  color: #fffe;
+  font-size: 1.5rem ;
+  transition: .4s ease;
+}
+.navigation ul{
+  list-style: none;
+  display: flex;
+
+}
+.navigation ul li{
+  margin-left: 20px;
+}
+
+#presentation{
+  height:90vh;
+  background-color: #3a3a49;
+  color:#fffe;
+  margin-bottom: 20px;
+}
+
+.introduction{
+  align-items: center;
+  text-align: center;
+}
+#myname{
+  font-family: 'Alata', sans-serif;
+  margin-top: 100px;
+  margin-left:150px;
+  font-size: 4.5rem;
+ 
+}
+
+/*Game Related styles*/
 #game-container{
   width: 768;
   max-width: 800;
@@ -400,11 +553,11 @@ input:checked + .slider:before {
   #universitySign{
     background-color: antiquewhite;
     position: absolute;
-    top:30%;
+    top:20%;
+    left: 40%;
     text-align: center;
     vertical-align: center;
     padding-top:70px;
-    left: 30%;
     font-family: 'Press Start 2P', cursive;
     width:400px;
     height:200px;
@@ -416,11 +569,12 @@ input:checked + .slider:before {
   #directions{
     background-color: antiquewhite;
     position: absolute;
-    top:30%;
+    top:20%;
+    left:40%;
     text-align: center;
     vertical-align: center;
     padding-top:70px;
-    left: 30%;
+
     font-family: 'Press Start 2P', cursive;
     width:400px;
     height:200px;

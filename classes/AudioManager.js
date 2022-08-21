@@ -36,7 +36,7 @@ mute(e){
 }
 
  clean(){
-  //called when switching scenes, stop all music of that scene
+  //called when switching scenes, mute all music of that scene
   this.Sounds.forEach(sound =>{
     sound.mute(true)
   })

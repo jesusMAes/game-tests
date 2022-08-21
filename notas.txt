@@ -159,10 +159,20 @@ Music promoted by https://www.chosic.com/free-music/all/
 Creative Commons CC BY-SA 3.0
 https://creativecommons.org/licenses/by-sa/3.0/
 
+la de la escena de murcia es: Merry Bay by Ghostrifter Official | https://soundcloud.com/ghostrifter-official
+Music promoted by https://www.chosic.com/free-music/all/
+Creative Commons CC BY-SA 3.0
+https://creativecommons.org/licenses/by-sa/3.0/
+
+la escena de la universidad es: Field Of Fireflies by Purrple Cat | https://purrplecat.com/
+Music promoted on https://www.chosic.com/free-music/all/
+Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+https://creativecommons.org/licenses/by-sa/3.0
+
 
 AUDIOMANAGER: hay un problema cuando trabajamos con howls y es que si los creas fuera de los metodos de clase de la escena se cargan todos a la vez y los que tengan autoplay se reproducen pero si los creas en la escena para poder acceder a ellos por temas de scope no te deja. Además al cambiar de escena los sonidos de la anterior siguen sonando, la solución a esto ha sido crear una clase y un data
 
-La clase es audioManager, es una clase sencilla con una propiedad y tres métodos, la propiedad almacena los sonidos que tenemos en marcha, en el método init de cada escena añadimos los sonidos que queremos en ella, el metodo init de nuestra clase comprueba el estado actual del botón de audio, que solo tiene un addEventlistener en la primera escena si lo metiesemos en todas se rompería
+La clase es audioManager, es una clase sencilla con una propiedad y tres métodos, la propiedad almacena los sonidos que tenemos en marcha, en el método init de cada escena añadimos los sonidos que queremos en ella, el metodo init de nuestra clase comprueba el estado actual del botón de audio, que solo tiene un addEventlistener en la primera escena, está en room pero cuando hagamos el menu de inicio hay que ponerlo allí si lo metiesemos en todas se rompería
 
 Así metemos el addEventlistener en la escena de la habitación, ese addEventlistener va a llamar a la función mute, que va a coger el checked del botón y pasar por todos los sonidos que tengamos almacenados en el objeto en ese momento poniendoles mute o quitándoselo. Al salir de una escena tenemos que llamar al metodo clean que lo pone todo en mute. 
 
