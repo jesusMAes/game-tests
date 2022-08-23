@@ -25,3 +25,7 @@ La imagen de cada proyecto lleva una animación de css y otra de gsap, la de css
 En gsap hemos cogido todos los elementos de la clase project y les hemos puesto un eventlistener para cuando el ratón entra y otro para cuando sale, al entrar recuperamos su hijo con la clase projectDescription y su hijo con la clase stack, luego los animamos para quitarles el display none y la altura 0, es necesario animar también el stack porque si no permanece visible hasta que acaba la animación y queda feo, en mouse leave es lo mismo pero al revés, para que se oculte
 
 22/8 terminados projects, trabajando en about me animación de foto
+
+23/8 conseguida la animación de la foto y la de un pequeño texto inferior, hecho el contact, funciona un poco raro a ve rsi me explica Para poder enviar directos mails desde javascript no se puede, puede usarse mailto pero no es igual, entonces hay que usar una librería externa llamada emailjs, en esa librería te creas una cuenta, y haces la plantilla del email, ellos te dan la función ya hecha, básicamente en los inputs les das un nombre concreto y en el email dices que tal variable es tal, luego la libreria en el evento submit se encarga de enviarlo a donde esté, tengo que estudiarla más en el tema de seguridad y de la public key que te dan por si caduca y la tengo que actualizar o algo
+
+En teoria es segura, porque el email lo creas tu y lo unico que hace esta librería es rellenar los huecos con las variables y darle al botón enviar, pero claro eso impide el spam dudo que pueda inyectarse código desde ahí pero veré

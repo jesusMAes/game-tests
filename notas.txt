@@ -181,3 +181,5 @@ Al entrar en la siguiente escena primero decimos que music.sounds=[] para vaciar
 luego le decimos music.sounds =[] un array con los sonidos, y después music.init para inicializarlos
 
 Es importante importar music en todas las escenas porque es un objeto aparte que llamamos en la primera escena y vamos modificando durante el juego. no es como player que lo instanciamos en cada una, en este nos interesa que los cambios permanezcan y si sacamos un sonido se vaya, si no acabaríamos con 500 objetos music sonando por ahí sin saber por qué así mantenemos integridad y si hay que añadir cosas está todo junto
+
+Escena de inicio, es solo una copia del mapa de room con una función para que la emoción del personaje cambie cada x tiempo y lleva un botón que al pulsarse inicia la escena de room. Es aquí donde se inicializa music porque debe hacerse solo una vez por tanto se hace en la primera escena que se active
