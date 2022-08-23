@@ -849,6 +849,25 @@ footer{
   max-width: 350px;
 }
 
+#startButton{
+  width: 200;
+  height:100px;
+  opacity: 0;
+  border-radius: 10px;
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.8rem;
+  border: 3px solid rgb(233, 223, 212);
+  position: absolute;
+  margin-top: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  left:0;
+  right: 0;
+}
+#startButton:hover{
+  background-color: rgb(247, 223, 192);
+}
+
 body.modal-open div.modal-backdrop{
   position: absolute;
   width:850;

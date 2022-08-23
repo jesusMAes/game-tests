@@ -16,6 +16,7 @@ let roomMusic = new Howl({
   src:['./Assets/Sounds/roomScene.mp3'],
   autoplay:true,
   loop:true,
+  mute:true,
   volume:0.7
 })
 let bip = new Howl({
@@ -23,12 +24,7 @@ let bip = new Howl({
   volume:0.3
 })
 
-let audioButton = document.getElementById('audio')
 
-
-audioButton.addEventListener('click', function(e){
-  music.mute(e)
-},false )
 
 //get event data
 let data = roomData

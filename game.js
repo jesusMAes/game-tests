@@ -1,4 +1,5 @@
 import DialogModalPlugin from './dialog_plugin/dialog__plugin.js'
+import mainScreen from './scenes/mainscreen.js'
 import RoomScene from './scenes/roomScene.js'
 import MurciaScene from './scenes/murciaScene.js'
 import UniversityScene from './scenes/universityScene.js'
@@ -17,7 +18,7 @@ let config ={
   },
 
   title: 'Take a walk',
-  scene: [RoomScene,JobScene, MurciaScene, UniversityScene, ],
+  scene: [mainScreen,RoomScene,JobScene, MurciaScene, UniversityScene],
   plugins:{
     scene:[{
       key: "gridEngine",

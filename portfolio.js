@@ -35,6 +35,27 @@ panels.forEach((panel,i) =>{
     }
   });
 });
+const gameDiv = document.getElementById('game-container')
+
+
+ScrollTrigger.create({
+  trigger:gameDiv,
+  start: "top 60%",
+  onEnter:()=>{
+    let start = document.getElementById('startButton')
+    gsap.to(start,{
+      opacity:1,
+      y:50,
+      duration:.3,
+      onComplete:()=>{
+        gsap.to(start,{
+          y:-50,
+          duration:.5
+        })
+      }
+    })
+  }
+})
 //introduction animation
 let tl = gsap.timeline()
 //intro effect
@@ -300,9 +321,6 @@ let user_email = document.getElementById('user_email');
 let user_message = document.getElementById('contact-textArea');
 let submitButton = document.getElementById('contact-form');
 
-console.log(user_name)
-console.log(user_email)
-console.log(user_message)
 submitButton.addEventListener('submit', ()=>{
   user_name.value='';
   user_email.value='';
