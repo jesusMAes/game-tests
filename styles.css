@@ -782,6 +782,9 @@ body{
   color: #fffe;
   border-radius: 5px;
 }
+#sendButton:hover{
+  background-color: #5c3cbd;
+}
 
 #media-links{
   margin-left: 40%;
