@@ -49,7 +49,7 @@ ScrollTrigger.create({
       duration:.3,
       onComplete:()=>{
         gsap.to(start,{
-          y:-50,
+          y:-25,
           duration:.5
         })
       }
