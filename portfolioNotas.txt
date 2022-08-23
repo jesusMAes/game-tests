@@ -23,3 +23,5 @@ El segundo bloque es el label del project, es decir su nombre con el enlace que 
 La imagen de cada proyecto lleva una animación de css y otra de gsap, la de css pone overflow hidden para que no se salga de su borde y al hacer hover escala la imagen dando una sensación de zoom
 
 En gsap hemos cogido todos los elementos de la clase project y les hemos puesto un eventlistener para cuando el ratón entra y otro para cuando sale, al entrar recuperamos su hijo con la clase projectDescription y su hijo con la clase stack, luego los animamos para quitarles el display none y la altura 0, es necesario animar también el stack porque si no permanece visible hasta que acaba la animación y queda feo, en mouse leave es lo mismo pero al revés, para que se oculte
+
+22/8 terminados projects, trabajando en about me animación de foto

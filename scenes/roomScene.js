@@ -7,6 +7,10 @@ import {music} from '../data/music.js'
 let dialogBox = document.getElementById('UI');
 let blackScreen = document.getElementById('blackScreen')//for transitions
 
+
+let cursors
+
+
 //sound 
 let roomMusic = new Howl({
   src:['./Assets/Sounds/roomScene.mp3'],
@@ -272,8 +276,10 @@ class RoomScene extends Phaser.Scene{
       this.checkSwitchZone(zone)
     })
 
+
+
      //KEYBOARD
-     const cursors = this.input.keyboard.createCursorKeys();
+      cursors = this.input.keyboard.createCursorKeys();
      if(cursors.left.isDown && player.movable){
        this.gridEngine.move('player','left')
      }else if(cursors.right.isDown && player.movable){
@@ -284,9 +290,11 @@ class RoomScene extends Phaser.Scene{
        this.gridEngine.move('player', 'down')
      }
 
+
      
 
   }//END update
+
 
   checkDogDistance(){
     let distance = Phaser.Math.Distance.Between(player.getCenter().x,player.getCenter().y, luffy.x, luffy.y)

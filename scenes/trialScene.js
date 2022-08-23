@@ -271,28 +271,7 @@ class trialScene extends Phaser.Scene{
     //acercar jugadores
     let npcPosition = this.gridEngine.getPosition(npc.id)
     let playerPosition = this.gridEngine.getPosition('player')
-    // let npcDestinyX
-    // let npcDestinyY
-    // //posiciones en x
-    // if(playerPosition.x < npcPosition.x ){
-    //  npcDestinyX = playerPosition.x+1
-    // }else if(playerPosition.x >npcPosition.x ){
-    //   npcDestinyX = playerPosition.x-1
-    // }else if(playerPosition.x ==npcPosition.x ){
-    //   npcDestinyX=playerPosition.x
-    // }
-    
-    // //posiciones en Y
-    // if(playerPosition.y < npcPosition.y ){
-    //   npcDestinyY = playerPosition.y+1
-    //   npcDestinyX = playerPosition.x
-    //  }else if(playerPosition.y >npcPosition.y ){//funciona
-    //    npcDestinyY = playerPosition.y-1
-    //    npcDestinyX = playerPosition.x
-    //  }else if(playerPosition.y ==npcPosition.y ){
-    //    npcDestinyY=playerPosition.y
-    //  }
-    // this.gridEngine.moveTo(npc.id, {x: npcDestinyX, y:npcDestinyY})
+
      setTimeout(npc.emotes.bind(npc), 250)
 
     currentDialog = npc.dialogs[npc.currentDialog]

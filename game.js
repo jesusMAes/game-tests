@@ -40,5 +40,27 @@ let config ={
 }
 
 
-new Phaser.Game(config)
+let game =new Phaser.Game(config)
 
+//disable keys when not on screen
+let divGame = document.getElementById('game-container')
+
+var isInViewport = function (elem) {
+  var bounding = elem.getBoundingClientRect();
+  return (
+      bounding.top >= 0 &&
+      bounding.left >= 0 &&
+      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+};
+
+window.addEventListener('scroll', function(event){
+  if(isInViewport(divGame)){
+    game.input.keyboard.enabled=true
+
+  }else{
+    game.input.keyboard.enabled=false
+
+  }
+})

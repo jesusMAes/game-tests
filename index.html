@@ -14,6 +14,29 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
   <!--epub js-->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+        // https://dashboard.emailjs.com/admin/account
+        emailjs.init('x0ohFkv7rLRyVY54z');
+    })();
+  </script>
+<script type="text/javascript">
+  window.onload = function() {
+      document.getElementById('contact-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+          // generate a five digit number for the contact_number variable
+          this.contact_number.value = Math.random() * 100000 | 0;
+          // these IDs from the previous steps
+          emailjs.sendForm('contact_service', 'contact_form', this)
+              .then(function() {
+                  console.log('SUCCESS!');
+              }, function(error) {
+                  console.log('FAILED...', error);
+              });
+      });
+  }
+</script>
   <!--Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Portfolio of Jesús Mármol">
@@ -131,6 +154,7 @@
         </div>
       </a>
       </div>
+
         <div class="project">
           <div class="project-image">
             <img src="portfolioImages/cduSorterPreview.png" id="cduPreview"/>
@@ -155,6 +179,7 @@
           </div>
         </a>
         </div>
+
         <div class="project">
           <div class="project-image">
             <img src="portfolioImages\citeThisPreview.png" id="citeThisPreview"/>
@@ -179,6 +204,7 @@
           </div>
         </a>
         </div>
+
         <div class="project">
            <div class="project-image">
           <img src="portfolioImages\pokePreview.png" id="pokePreview"/>
@@ -189,7 +215,6 @@
               <div>
                 <i class="fa-brands fa-html5 htmlstack" title="HTML"></i>
                 <i class="fa-brands fa-js jsStack"  title="Javascript"></i>
-
               </div>
             </div>
           </div>
@@ -200,7 +225,7 @@
           <code>/></code>
         </div>
         </div>
-      </div>
+    </div>
       <a href="https://github.com/jesusMAes" id="seeProjectsa" target="_blank">
       <div id="seeProjects">
         See All
@@ -208,15 +233,83 @@
       </a>
     </section>
 
-
+    <br><br><br>
     <section id="about" class="panel">
       <h1>About</h1>
       <span>'</span>
+      <div class="about-wrapper">
+        <div class="about-content">
+          <div class="about-block">
+          <h4 class="about">Who I am?</h4>
+          <p>I'm a passionate student that loves to learn.</p>
+          <p>I've got two degrees: Information sciences and Journalism.</p>
+          <p>I've been coding for years and now I'm making several projects</p>
+          <p>I begin in coding with PHP and Java, but then I've met Javascript and fall in love with it.</p>
+          <p>I started with frontend while learning Javascript language, currently I'm passing to Backend</p>
+        </div>
+
+        <div class="about-block" id="lastBlock">
+          <h4 class="aboutH4">My Hobbies</h4>
+          <p>I'm a bookworm.</p> 
+          <p>Usually I'm in my room just studying or coding</p>
+          <p>Most of my time is for work but i find an hour or two to stay active on the gym and for read <i>lots of books</i></p>
+          <p>I used to play videogames but then I took an arrow in the knee</p>
+          <p>I have a tattoo of Great A'Tuin</p>
+        </div>
+        <br><br><br><br>
+      </div>
+        <div class="about-image">
+            <div class="flip-box">
+            <div class="flip-box-inner">
+              <div class="flip-box-front">
+              <img src="./portfolioImages/mePicrew1.png" alt="picture of me" id="picrewPhoto">
+             </div>
+             <div class="flip-box-back">
+            <img src="./portfolioImages/orla foto.jpg" id="orlaPhoto">
+            </div>  
+          </div>
+          </div>
+            <p class="photo-label">I look better on Picrew</p>
+        </div>
+      </div>
     </section>
+
+
     <section id="contact" class="panel">
       <h1>Contact</h1>
+      <span>'</span>
+      <h2>Let's work together</h2>
+      <div class="contact-wrap">
+        <div id="media-links">
+          <h4>Most people don't fill the forms</h4>
+          <h3>Contact me on social media</h3>
+          <div id="media-icons">
+            <a href="https://www.linkedin.com/in/jes%C3%BAs-m%C3%A1rmol/" target="_blank"><i class="fa-brands fa-linkedin-in linkedinIcon icon"></i></a>
+            <a href="https://github.com/jesusMAes" target="_blank"><i class="fa-brands fa-github icon githubIcon"> </i></a>
+           <a href="mailto:jesusmarmolesp@gmail.com" target="_blank"> <i class="fa-solid fa-at icon mailIcon"></i></a>
+           
+          </div>
+        </div>
+        <div>
+          <form id="contact-form">
+            <div id="user-data">
+            <input type="hidden" name="contact_number">
+            <label id="label-name">Name</label>
+            <input type="text" name="user_name" placeholder="Name" id="user_name">
+            <label id="label-email">Email</label>
+            <input type="email" name="user_email" placeholder="E-mail" id="user_email">
+          </div>
+            <label>Message</label>
+            <textarea name="message" placeholder="Write me!" id="contact-textArea" ></textarea>
+            <input type="submit" value="Send" id="sendButton">
+          </form>
+        </div>
+      </div>
     </section>
    
+    <footer>
+      <p>Copyright © 2022 Jesús Mármol</p>
+    </footer>
    
     <!--Howler-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js" integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Alata&family=Jura&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alata&family=Jura&family=Poppins&display=swap');
 
 button{
   display: block;
@@ -144,7 +144,6 @@ body{
 .navigation .logo{
   margin-left: auto;
   margin-top: 10px;
-  
   color: #fffe;
   font-size: 1.5rem ;
   transition: .4s ease;
@@ -152,7 +151,6 @@ body{
 .navigation ul{
   list-style: none;
   display: flex;
-
 }
 .navigation ul li{
   margin-left: 20px;
@@ -248,7 +246,6 @@ body{
 
 
 #skills{
-  
   width: 100%;
   margin-top: 60px;
   margin-bottom: 50px;
@@ -389,7 +386,8 @@ body{
   justify-content: center;
   cursor: pointer;
   overflow: hidden;
-}.project a{
+}
+.project a{
   text-decoration: none;
   color: #fffe
 }
@@ -575,7 +573,6 @@ body{
 
 #about{
   margin-top:50px;
-  min-height: 100px;
   width:100%;
   background-color: #93e5cd;
   color: #16161a;
@@ -602,6 +599,239 @@ body{
   margin-bottom: 40px;
 }
 
+.about-wrapper{
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  -ms-grid-column-align: center;
+}
+.about-content{
+  width:100%;
+  text-align: center;
+}
+.about-block {
+  opacity: 0;
+  margin-left: 20%;
+}
+.about-block h4{
+  margin-left: -10%;
+  font-family: 'Poppins', sans-serif;
+}
+.about-content p{
+  width:60%;
+  opacity: 0;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+}
+.about-image{
+  width: 100%;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.photo-label{
+  position:absolute;
+  bottom:50;
+  opacity:0;
+  left:0;
+  right:0;
+  margin-left: auto;
+  margin-right: auto;
+  transition: opacity 1s;
+}
+.flip-box{
+  width: 70%;
+  perspective: 1000px;
+  margin-left: 15%;
+}
+.flip-box-inner{
+  position:relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+.flip-box:hover .flip-box-inner{
+  transform: rotateY(180deg);
+}
+
+
+.flip-box-front, .flip-box-back{
+  position:absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+
+.flip-box-back{
+
+  transform: rotateY(180deg);
+}
+#picrewPhoto{
+  border-radius: 25%;
+  margin-top: 5%;
+  width:80%;
+  opacity: 0;
+  -webkit-transform: rotateY( 180deg);
+  transform: rotateY( 180deg);
+}
+#orlaPhoto{
+  border-radius: 10%;
+  margin-top: 5%;
+  width:70%;
+  height:80%;
+  opacity:1;
+  z-index: 2;
+}
+#contact{
+  display: flexbox;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+#contact h1{
+  width: 100%;
+  color: #fffe;
+  font-family: 'Jura', sans-serif;
+  font-size: 3rem;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 40px;
+}
+#contact h2{
+  color: #fffe;
+  font-family: 'Jura', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+#contact span{
+  position: absolute;
+  margin-top:-45px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  min-width:200px;
+  width: 200px;
+  min-height: 1px;
+  height: 1px;
+  background-color: #fffe;
+  color:transparent;
+  font-size: 1px;
+}
+.contact-wrap{
+  width:80%;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  text-align: left;
+  margin-left: 7%;
+}
+#user-data{
+  display: inline-flex;
+  position: relative;
+}
+#user_email{
+  margin-left: 5px;
+}
+#label-name{
+  position:absolute;
+  top:-25;
+}
+#label-email{
+  position:absolute;
+  top:-25;
+  left:50%
+}
+
+#contact-form{
+  margin-left: 25%;
+}
+#contact-form label{
+  width: 10%;
+  color: #fffe;
+  display: block;
+}
+#contact-form input{
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+#contact-textArea{
+  width:50%;
+  height: 50%;
+  margin-bottom: 20px;
+  align-self: flex-start;
+}
+#sendButton{
+  margin-top:10px;
+  margin-bottom: 20px;
+  width: 15%;
+  height: 13%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #7f5af0;
+  border:none;
+  color: #fffe;
+  border-radius: 5px;
+}
+
+#media-links{
+  margin-left: 40%;
+  font-family: 'Jura', Courier, monospace;
+}
+#media-links h4{
+  color: #fffe;
+  font-size: 1rem;
+}
+#media-links h3{
+  margin-top:20px;
+  color: #fffe;
+  font-family: 'Jura', Courier, monospace;
+}
+
+#media-icons{
+  margin-top: 20px;
+  font-size: 1.5rem;
+}
+.icon{
+  margin-right: 20px;
+}
+
+.linkedinIcon{
+  color: #0072b1;
+  transition: .2 ease;
+}
+.linkedinIcon:hover{
+  transform: translateY(2px);
+}
+.githubIcon{
+ color:white
+}
+.githubIcon:hover{
+  transform: translateY(2px);
+}
+.mailIcon{
+  color:white;
+}
+.mailIcon:hover{
+  transform: translateY(2px);
+}
+
+footer{
+  width: 100%;
+  text-align: center;
+  margin-top:100px;
+  color:#fffe;
+  font-size: 0.9rem;
+}
 
 
 /*Game Related styles*/
