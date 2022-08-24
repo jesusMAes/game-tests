@@ -15,7 +15,7 @@ Luego tenemos las olas que son un svg que no sé como funciona pero funciona as�
 
 Luego está l gamewrapper que ya conozco de sobra
 
-Tras el est´la seción de skills, usa un span para generar la barrita inferior y luego un div con background para el contenido, dentro van los iconos e imágenes, como cambiaban los colores he tenido que ir dandoles id y estilo uno a uno 
+Tras el está la seción de skills, usa un span para generar la barrita inferior y luego un div con background para el contenido, dentro van los iconos e imágenes, como cambiaban los colores he tenido que ir dandoles id y estilo uno a uno 
 
 La seccion project lleva su título y luego un project wrapper que es un grid de dos columnas o filas o lo que sea, cada columna es un div con la clase project, ese tiene dentro dos bloques, el primero agrupa la imagen y la descripción, que lleva dentro el texto y los logos de las tecnologías
 El segundo bloque es el label del project, es decir su nombre con el enlace que lleva a la web del proyecto, dentro de la descripcion habrá otro para ver el código, si consigo cuadrarlo
