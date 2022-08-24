@@ -16,7 +16,6 @@ let audioButton = document.getElementById('audio')
 
 audioButton.addEventListener('click', function(e){
   music.mute(e)
-  console.log(music)
 },false )
 
 let scene;
@@ -171,7 +170,6 @@ class mainScreen extends Phaser.Scene{
             
           }
         })
-
   }
 }
 

@@ -1254,6 +1254,12 @@ footer{
   width:260px;
   max-width: 260px;
 }
+#version{
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  color:white
+}
 
 #startButton{
   width: 200;
@@ -1556,11 +1562,11 @@ input:checked + .slider:before {
   #area{
     background-color: antiquewhite;
     width: 500px;
-    max-width: 800;
+    word-wrap: break-word;
+    max-width: 500;
     text-align: center;
     display: none;
     position: absolute;
-    padding-left:50px;
     margin-left: auto;
     margin-right: auto;
     margin-top:100px;

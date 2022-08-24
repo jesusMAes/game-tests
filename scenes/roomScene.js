@@ -433,6 +433,7 @@ class RoomScene extends Phaser.Scene{
       if(i < content.length){
         dialogBox.innerHTML += content.charAt(i);
         i++
+        bip.play()
         setTimeout(write.bind(this), 5,content)
       }else{
         i=0;
@@ -473,6 +474,7 @@ class RoomScene extends Phaser.Scene{
       if(i < content.length){
         dialogBox.innerHTML += content.charAt(i);
         i++
+        bip.play()
         setTimeout(writeDialog, 5,content)
         
       }else{
