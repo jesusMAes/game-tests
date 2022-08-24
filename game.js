@@ -65,3 +65,10 @@ window.addEventListener('scroll', function(event){
 
   }
 })
+//disable game on mobile
+window.addEventListener('load',()=>{
+  let display = window.innerWidth
+  if(display <=768){
+    game.destroy()
+  }
+})

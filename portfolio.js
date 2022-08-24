@@ -2,15 +2,20 @@
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-
+let i=0;
 const burguerButton = document.getElementById('burguerButton')
 let activeClass = 'active'
 burguerButton.addEventListener('click', (e)=>{
+  if(i==0){
+    i++
+  }else{
   e.currentTarget.classList.toggle(activeClass)
+  }
 })
 
 window.onload =(event)=>{
   burguerButton.click()
+
 }
 
 const navButtons = gsap.utils.toArray(".nav-item a");
@@ -94,9 +99,20 @@ tl.to('#myname',{
 
 let compressed = 'compressed'
 let navbar = document.getElementById('links')
+let collapsible = document.getElementById('collapsible')
 burguerButton.addEventListener('click',()=>{
   navbar.classList.toggle(compressed)
+
 })
+let de =window.innerWidth
+if(de <= 425){
+  collapsible.classList.toggle('show')
+
+}
+
+
+
+
 
 //projects info
 const projects = gsap.utils.toArray('.project');
@@ -311,9 +327,7 @@ flipbox.addEventListener('mouseleave', ()=>{
   })
 })
 
-flipbox.addEventListener('mouseout', ()=>{
-   flipInner.style.transform='rotateY(0deg)'
- })
+
 
 //submit form
 let user_name = document.getElementById('user_name');
