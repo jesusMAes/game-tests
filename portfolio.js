@@ -6,11 +6,9 @@ let i=0;
 const burguerButton = document.getElementById('burguerButton')
 let activeClass = 'active'
 burguerButton.addEventListener('click', (e)=>{
-  if(i==0){
-    i++
-  }else{
+
   e.currentTarget.classList.toggle(activeClass)
-  }
+  
 })
 
 window.onload =(event)=>{
