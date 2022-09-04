@@ -3,41 +3,41 @@
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 let i=0;
-const burguerButton = document.getElementById('burguerButton')
-let activeClass = 'active'
-burguerButton.addEventListener('click', (e)=>{
+// const burguerButton = document.getElementById('burguerButton')
+// let activeClass = 'active'
+// burguerButton.addEventListener('click', (e)=>{
 
-  e.currentTarget.classList.toggle(activeClass)
+//   e.currentTarget.classList.toggle(activeClass)
   
-})
+// })
 
-window.onload =(event)=>{
-  burguerButton.click()
+// window.onload =(event)=>{
+//   burguerButton.click()
 
-}
+// }
 
-const navButtons = gsap.utils.toArray(".nav-item a");
-const panels =gsap.utils.toArray(".panel");
+// const navButtons = gsap.utils.toArray(".nav-item a");
+// const panels =gsap.utils.toArray(".panel");
 
 //nav animation
-panels.forEach((panel,i) =>{
-  ScrollTrigger.create({
-    trigger: panel,
-    start: "top 60%",
-    onEnter:()=>{
-      navButtons.forEach((e)=>{
-        e.classList.remove("active");
-      });
-      navButtons[i].classList.add("active");
-    },
-    onEnterBack: ()=>{
-      navButtons.forEach((e) =>{
-        e.classList.remove("active");
-      });
-      navButtons[i].classList.add("active");
-    }
-  });
-});
+// panels.forEach((panel,i) =>{
+//   ScrollTrigger.create({
+//     trigger: panel,
+//     start: "top 60%",
+//     onEnter:()=>{
+//       navButtons.forEach((e)=>{
+//         e.classList.remove("active");
+//       });
+//       navButtons[i].classList.add("active");
+//     },
+//     onEnterBack: ()=>{
+//       navButtons.forEach((e) =>{
+//         e.classList.remove("active");
+//       });
+//       navButtons[i].classList.add("active");
+//     }
+//   });
+// });
 const gameDiv = document.getElementById('game-container')
 
 
@@ -64,7 +64,7 @@ let tl = gsap.timeline()
 //intro effect
 tl.from('#myname',{
   x:-1000,
-  duration:.5,
+  duration:.3,
 })
 tl.to('#myname',{
   x:150,
@@ -95,18 +95,18 @@ tl.to('#myname',{
 },'>')
 
 
-let compressed = 'compressed'
-let navbar = document.getElementById('links')
-let collapsible = document.getElementById('collapsible')
-burguerButton.addEventListener('click',()=>{
-  navbar.classList.toggle(compressed)
+// let compressed = 'compressed'
+// let navbar = document.getElementById('links')
+// let collapsible = document.getElementById('collapsible')
+// burguerButton.addEventListener('click',()=>{
+//   navbar.classList.toggle(compressed)
 
-})
-let de =window.innerWidth
-if(de <= 425){
-  collapsible.classList.toggle('show')
+// })
+// let de =window.innerWidth
+// if(de <= 425){
+//   collapsible.classList.toggle('show')
 
-}
+// }
 
 
 
@@ -156,7 +156,7 @@ projects.forEach(project =>{
 const abouts = document.querySelectorAll('.about-block ');
 
 
-abouts.forEach((about, i) =>{
+abouts.forEach((about) =>{
   ScrollTrigger.create({
     trigger: about,
     start: "top 60%",

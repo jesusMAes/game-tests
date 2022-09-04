@@ -242,12 +242,15 @@ body{
   color:transparent;
   font-size: 1px;
 }
+#takeAwalk p{
+  margin-top:12px
+}
 
 
 
 #skills{
   width: 100%;
-  margin-top: 60px;
+  margin-top: 80px;
   margin-bottom: 50px;
   text-align: center;
   align-items: center;
@@ -279,13 +282,13 @@ body{
   justify-content: center;
 }
 #htmlIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #e34c26;
   padding: 10px;
   margin-left: 30px;
 }
 #jsIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #f0db4f;
   padding: 10px;
   margin-left: 30px;
@@ -293,13 +296,13 @@ body{
   background-color: #323330	;
 }
 #reactIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #37707e;
   padding: 10px;
   margin-left: 30px;
 }
 #bootstrapIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   background:linear-gradient(#602C50, #080135);;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -307,41 +310,42 @@ body{
   margin-left: 30px;
 }
 #nodeIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #3C873A;
   padding: 10px;
   margin-left: 30px;
 }
 #mysqlIcon{
-  width:30px;
+  width:35px;
   margin-left: 30px;
 }
 #sassIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #CD6799;
   padding: 10px;
   margin-left: 30px;
 }
 #reduxIcon{
-  width:30px;
+  width:35px;
   margin-left: 30px;
 }
+
 #PhaserIcon{
-  width:30px;
+  width:35px;
   margin-left: 30px;
 }
 #gitIcon{
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #F1502F;
   padding: 10px;
   margin-left: 30px;
 }
 #mongoIcon{
-  width:30px;
+  width:35px;
   margin-left: 30px;
 }
 #javaIcon{
-  width:30px;
+  width:35px;
   margin-left: 30px;
 }
 
@@ -466,6 +470,12 @@ body{
   margin-left: 30px;
   margin-bottom:15px;
 }
+.reduxStack{
+  width:20px;
+  margin-left: 30px;
+  margin-bottom:15px;
+  z-index: 3;
+}
 .sassStack{
   font-size: 2rem;
   color: #CD6799;
@@ -477,6 +487,17 @@ body{
   color: #37707e;
   padding: 10px;
   margin-left: 30px;
+}
+.nodeStack{
+  font-size: 2rem;
+color: #3C873A;
+padding: 10px;
+margin-left: 30px;
+}
+.mongoStack{
+  width:20px;
+  margin-left: 30px;
+  margin-bottom:15px;
 }
 
 @media (max-width:1000px){
@@ -516,6 +537,12 @@ body{
     font-size: 1rem;
     padding-top: 0;
     padding-left: 5px;
+  }
+  .nodeStack{
+    font-size: 2rem;
+  color: #3C873A;
+  padding: 10px;
+  margin-left: 30px;
   }
   .bootstrapStack{
     font-size: 1rem;
@@ -561,9 +588,9 @@ body{
   width:100%;
   border-radius: 5px;
 }
-#pokePreview{
+#blogPreview{
   width: 100%;
-  height: 80%;
+  height: 95%;
 }
 
 #seeProjects{
@@ -579,6 +606,7 @@ body{
   margin-left: auto;
   margin-right: auto;
   font-size: 1.1rem;
+  transition: 0.3s ease;
 }
 #seeProjectsa{
   text-decoration: none;
@@ -591,6 +619,7 @@ body{
 
 #about{
   margin-top:50px;
+  padding-bottom: 50px;
   width:100%;
   background-color: #93e5cd;
   color: #16161a;
@@ -611,6 +640,7 @@ body{
   font-size: 1px;
 }
 #about h1{
+  padding-top:60px;
   color: #16161a;
   font-family: 'Jura', sans-serif;
   font-size: 3rem;
@@ -751,25 +781,16 @@ body{
   margin-left: 7%;
 }
 #user-data{
-  display: inline-flex;
+  display: block;
   position: relative;
 }
-#user_email{
-  margin-left: 5px;
-}
-#label-name{
-  position:absolute;
-  top:-25;
-}
-#label-email{
-  position:absolute;
-  top:-25;
-  left:50%
-}
+
 
 #contact-form{
   margin-left: 25%;
 }
+
+
 #contact-form label{
   width: 10%;
   color: #fffe;
@@ -777,14 +798,23 @@ body{
 }
 #contact-form input{
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  margin-top:5px;
+  width: 50%;
   align-items: center;
+}
+
+.form-control:focus{
+  box-shadow:none !important;
+  border: 1.2px solid #3C873A !important;
+  
 }
 
 #contact-textArea{
   width:50%;
   height: 50%;
-  margin-bottom: 20px;
+  margin-top:5px;
+  margin-bottom: 30px;
   align-self: flex-start;
 }
 #sendButton{
@@ -827,23 +857,28 @@ body{
 }
 
 .linkedinIcon{
-  color: #0072b1;
-  transition: .2 ease;
+  color: white;
+  transition: .3 ease;
 }
 .linkedinIcon:hover{
-  transform: translateY(2px);
+  transform: scale(1.05) ;
+  color: #93e5cd;
 }
 .githubIcon{
- color:white
+ color:white;
+ transition: .3 ease;
 }
 .githubIcon:hover{
-  transform: translateY(2px);
+  transform: scale(1.05) ;
+  color: #93e5cd;
 }
 .mailIcon{
   color:white;
+  transition: .3 ease;
 }
 .mailIcon:hover{
-  transform: translateY(2px);
+  transform: scale(1.05) ;
+  color: #93e5cd;
 }
 
 footer{
@@ -921,6 +956,10 @@ footer{
     width:80%;
 
   }
+  #nodeIcon{
+    
+    margin-left: 10px;
+  }
 }
 
 /*Tablet 768px*/
@@ -996,11 +1035,7 @@ footer{
     margin-bottom: 10px;
     width:50%
   }
-  #label-email{
-    position:absolute;
-    top:-25;
-    left:50%
-  }
+
   #media-links{
     margin-left: 20%;
 
@@ -1020,6 +1055,24 @@ footer{
   }
   .icon{
     margin-right: 20px;
+  }
+  .nodeStack{
+    font-size: 0.9rem;
+    color: #3C873A;
+    margin-left: 10px;
+  }
+  .mongoStack{
+    width:15px
+  }
+  .reduxStack{
+    width:10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+  }
+  .reactStack{
+    font-size: 1rem;
+    padding: 10px;
+    margin-left: 10px;
   }
   #contact-textArea{
     height: 40%;
@@ -1130,11 +1183,7 @@ footer{
   #user_email{
     margin-left: 0px;
   }
-  #label-email{
-    position:absolute;
-    top:30;
-    left:0
-  }
+
   #contact-textArea{
     height: 30%;
   }
@@ -1178,6 +1227,9 @@ footer{
     height: 30%;
     width:100%;
   }
+  .mongoStack{
+    margin-left: 15px;
+  }
   
 }
 
@@ -1186,6 +1238,9 @@ footer{
   #htmlIcon{
     font-size: 1.8rem;
     margin-left: 20px;
+  }
+  .photo-label{
+    font-size: 0.8rem;
   }
   .projectDescription{
     background-color: rgba(22, 22, 26, 0.7);
@@ -1217,27 +1272,34 @@ footer{
   .jsStack{
     font-size: 1rem;
     padding: 10px;
-    margin-left: 30px;
+    margin-left: 10px;
   }
   .bootstrapStack{
     font-size: 1rem;
     padding: 10px;
-    margin-left: 30px;
+    margin-left: 10px;
   }
   .phaserStack{
-    width:15px;
-    margin-left: 30px;
-    margin-bottom:15px;
+    width:20px;
+    margin-left: 10px;
+    margin-bottom:10px;
   }
   .sassStack{
     font-size: 1rem;
     padding: 10px;
-    margin-left: 30px;
+    margin-left: 10px;
   }
   .reactStack{
     font-size: 1rem;
     padding: 10px;
-    margin-left: 30px;
+    margin-left: 0px;
+  }
+  .reduxStack{
+    width:10px;
+    margin-bottom: 4px;
+  }
+  .mongoStack{
+    margin-bottom: 5px;
   }
 }
 
