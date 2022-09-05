@@ -1151,11 +1151,17 @@ footer{
     grid-template-columns: 100%;
     row-gap: 50px;
   }
+  .project{
+    width:90%
+  }
   #seeProjects{
     width: 25%; 
   }
   .about-image{
     margin-top: 150px;
+  }
+  .about-block  p{
+    font-size: 0.9rem;
   }
   #orlaPhoto{
     width:70%;
@@ -1204,7 +1210,7 @@ footer{
   }
   .about-content p{
     width:100%;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
   }
   #orlaPhoto{
     width:80%;
