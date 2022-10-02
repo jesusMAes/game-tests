@@ -301,6 +301,12 @@ body{
   padding: 10px;
   margin-left: 30px;
 }
+#angularIcon{
+  font-size: 2.5rem;
+  color: #dd1b16;
+  padding: 10px;
+  margin-left: 30px;
+}
 #bootstrapIcon{
   font-size: 2.5rem;
   background:linear-gradient(#602C50, #080135);;
@@ -1107,6 +1113,9 @@ footer{
     font-size: 1.5rem;
   }
   #reactIcon{
+    font-size: 1.5rem;
+  }
+  #angularIcon{
     font-size: 1.5rem;
   }
   #bootstrapIcon{
